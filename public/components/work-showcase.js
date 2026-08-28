@@ -181,6 +181,25 @@ WORK_TEMPLATE.innerHTML = `
     color: var(--wc-fg);
   }
 
+  .pill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .pill {
+    display: inline-block;
+    background: var(--wc-pill-bg, #d9d9d9);
+    color: var(--wc-pill-fg, #0a0a0a);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
   @media (max-width: 860px) {
     .layout {
       flex-direction: column;
@@ -215,11 +234,11 @@ WORK_TEMPLATE.innerHTML = `
     </div>
     <div class="meta-block">
       <h4>Stack</h4>
-      <p class="meta-stack"></p>
+      <div class="meta-stack pill-list"></div>
     </div>
     <div class="meta-block">
       <h4>Implementations</h4>
-      <p class="meta-implementations"></p>
+      <div class="meta-implementations pill-list"></div>
     </div>
   </div>
 </div>
@@ -341,8 +360,30 @@ class WorkShowcase extends HTMLElement {
 
     badgeEl.textContent = String(this._index + 1).padStart(2, "0");
     roleEl.textContent = item.role || "";
-    stackEl.textContent = item.stack || "";
-    implEl.textContent = item.implementations || "";
+    stackEl.innerHTML = this._buildPills(item.stack);
+    implEl.innerHTML = this._buildPills(item.implementations);
+  }
+
+  _buildPills(value) {
+    const list = this._toList(value);
+    if (list.length === 0) return "";
+
+    return list
+      .map((tag) => `<span class="pill">${window.TextHelper.escapeText(tag)}</span>`)
+      .join("");
+  }
+
+  _toList(value) {
+    if (Array.isArray(value)) {
+      return value.map((v) => String(v).trim()).filter(Boolean);
+    }
+    if (typeof value === "string") {
+      return value
+        .split("/")
+        .map((v) => v.trim())
+        .filter(Boolean);
+    }
+    return [];
   }
 
   _buildPreviewMedia(item) {

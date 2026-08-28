@@ -76,4 +76,5 @@ work-showcase {
   --wc-font-heading: var(--font-heading);
   --wc-font-body: var(--font-nav);
   --wc-accent: var(--color-fg);
+  --wc-border: var(--color-fg);
 }

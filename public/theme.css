@@ -5,7 +5,7 @@
   font-style: normal;
   font-display: swap;
 }
- 
+
 @font-face {
   font-family: "Supply";
   src: url("/fonts/supply/PPSupplySans-Regular.otf") format("opentype");
@@ -13,54 +13,53 @@
   font-style: normal;
   font-display: swap;
 }
- 
+
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
- 
+
 :root {
   /* Brand colors */
   --color-bg: #0a0a0a;
   --color-fg: #ffffff;
   --color-accent: #6fdc4d;
   --border-color: #737373;
- 
+
   /* Typography */
   --font-nav: "Supply", "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-heading: "Archivo Black", "Space Grotesk", Arial, sans-serif;
   --font-body: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-mono: "IBM Plex Mono", "Courier New", monospace;
-  
 }
- 
+
 /* ---- Reset ---- */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
- 
+
 html,
 body {
   margin: 0;
   padding: 0;
 }
- 
+
 body {
   background: var(--color-bg);
   color: var(--color-fg);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
 }
- 
+
 img {
   max-width: 100%;
   display: block;
 }
- 
+
 a {
   color: inherit;
 }
- 
+
 /* ---- Nav theming ---- */
 simple-nav {
   --nav-bg-start: var(--color-bg);
@@ -69,4 +68,12 @@ simple-nav {
   --nav-font-weight: 400;
   --nav-active-color: var(--color-accent);
   --nav-border-color: var(--border-color);
+}
+
+/* ---- Work showcase theming ---- */
+work-showcase {
+  --wc-bg: transparent;
+  --wc-font-heading: var(--font-heading);
+  --wc-font-body: var(--font-nav);
+  --wc-accent: var(--color-fg);
 }

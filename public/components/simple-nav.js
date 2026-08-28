@@ -17,7 +17,7 @@ NAV_TEMPLATE.innerHTML = `
     --nav-fg: #ffffff;
     --nav-font-family: 'Helvetica Neue', Arial, sans-serif;
     --nav-font-weight: 700;
-    --nav-font-size: 12px;
+    --nav-font-size: 20px;
     --nav-letter-spacing: 0.08em;
     --nav-link-gap: 32px;
     --nav-social-gap: 16px;

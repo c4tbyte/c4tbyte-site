@@ -19,7 +19,7 @@ NAV_TEMPLATE.innerHTML = `
     --nav-font-weight: 700;
     --nav-font-size: 18px;
     --nav-letter-spacing: 0.08em;
-    --nav-link-gap: 48px;
+    --nav-link-gap: 56px;
     --nav-social-gap: 16px;
     --nav-right-gap: 32px;
     --nav-icon-size: 18px;

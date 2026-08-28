@@ -236,9 +236,9 @@ WORK_TEMPLATE.innerHTML = `
   }
 </style>
 
-<h2 part="title"></h2>
 <div class="layout">
   <div class="list-col">
+    <h2 part="title"></h2>
     <ul class="item-list"></ul>
     <a class="view-all" href="#" target="_blank" rel="noopener"></a>
   </div>

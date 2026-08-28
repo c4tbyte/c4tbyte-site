@@ -19,13 +19,13 @@ NAV_TEMPLATE.innerHTML = `
     --nav-font-weight: 700;
     --nav-font-size: 20px;
     --nav-letter-spacing: 0.08em;
-    --nav-link-gap: 32px;
+    --nav-link-gap: 48px;
     --nav-social-gap: 16px;
     --nav-right-gap: 32px;
     --nav-icon-size: 18px;
     --nav-logo-height: 56px;
     --nav-padding-y: 18px;
-    --nav-padding-x: 24px;
+    --nav-padding-x: 34px;
     --nav-mobile-breakpoint: 1024px;
 
     position: relative;

@@ -8,7 +8,7 @@
  
 @font-face {
   font-family: "Supply";
-  src: url("/fonts/supply/Supply-Regular.woff2") format("woff2");
+  src: url("/fonts/supply/PPSupplySans-Regular.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -62,7 +62,7 @@ simple-nav {
   --nav-bg-start: var(--color-bg);
   --nav-fg: var(--color-fg);
   --nav-font-family: var(--font-nav);
-  --nav-font-weight: 700;
+  --nav-font-weight: 400;
   --nav-active-color: var(--color-accent);
   --nav-border-color: #737373;
 }

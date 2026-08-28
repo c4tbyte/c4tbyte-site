@@ -30,9 +30,27 @@ WORK_TEMPLATE.innerHTML = `
     box-sizing: border-box;
   }
 
+  :host::after {
+    content: "";
+    position: absolute;
+    top: calc(-1 * var(--wc-padding));
+    right: 0;
+    width: 420px;
+    height: calc(100% + var(--wc-padding));
+    background-image: url("/images/showcase-bg.png");
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-size: cover;
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 0;
+  }
+
   * { box-sizing: border-box; }
 
   h2 {
+    position: relative;
+    z-index: 1;
     margin: 0 0 var(--wc-item-gap);
     font-family: var(--wc-font-heading);
     font-size: 32px;
@@ -42,6 +60,8 @@ WORK_TEMPLATE.innerHTML = `
   }
 
   .layout {
+    position: relative;
+    z-index: 1;
     display: flex;
     gap: var(--wc-column-gap);
     align-items: flex-start;

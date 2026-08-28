@@ -37,7 +37,7 @@ WORK_TEMPLATE.innerHTML = `
     position: absolute;
     top: calc(-1 * var(--wc-padding));
     right: 0;
-    width: 480px;
+    width: 750px;
     height: calc(100% + var(--wc-padding));
     background-image: url("/images/showcase-bg.png");
     background-repeat: no-repeat;

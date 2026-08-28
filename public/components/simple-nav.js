@@ -42,7 +42,7 @@ NAV_TEMPLATE.innerHTML = `
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    padding: var(--nav-padding-y) var(--nav-padding-x);
+    padding: var(--nav-padding-y) var(--nav-padding-x-right, 34px) var(--nav-padding-y) var(--nav-padding-x);
   }
 
   .logo-link {

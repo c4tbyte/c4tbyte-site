@@ -17,7 +17,7 @@ NAV_TEMPLATE.innerHTML = `
     --nav-fg: #ffffff;
     --nav-font-family: 'Helvetica Neue', Arial, sans-serif;
     --nav-font-weight: 700;
-    --nav-font-size: 20px;
+    --nav-font-size: 18px;
     --nav-letter-spacing: 0.08em;
     --nav-link-gap: 48px;
     --nav-social-gap: 16px;
@@ -80,6 +80,7 @@ NAV_TEMPLATE.innerHTML = `
     letter-spacing: var(--nav-letter-spacing);
     text-transform: uppercase;
     white-space: nowrap;
+    text-shadow: 0.3px 0 0 currentColor, -0.3px 0 0 currentColor;
   }
 
   .links a:hover { opacity: 0.7; }

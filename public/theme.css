@@ -15,6 +15,7 @@
 }
  
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
  
 :root {
   /* Brand colors */
@@ -24,6 +25,7 @@
  
   /* Typography */
   --font-nav: "Supply", "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-heading: "Archivo Black", "Space Grotesk", Arial, sans-serif;
   --font-body: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-mono: "IBM Plex Mono", "Courier New", monospace;
 }

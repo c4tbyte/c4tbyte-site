@@ -7,21 +7,17 @@
   <link rel="stylesheet" href="/theme.css" />
 
   <style>
-  .hero {
+  .hero-wrap {
     position: relative;
-    overflow: hidden;
-    background: var(--color-bg);
-    padding: 64px 34px 96px;
-    min-height: 480px;
   }
-  
-  .hero::before {
+
+  .hero-wrap::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 55%;
-    height: 100%;
+    height: 140%;
     background-image: url("/images/hero-binary.png");
     background-repeat: no-repeat;
     background-position: left top;
@@ -30,15 +26,22 @@
     pointer-events: none;
     z-index: 0;
   }
-  
+
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+    padding: 64px 34px 96px;
+    min-height: 480px;
+  }
+
   .hero::after {
     content: "";
     position: absolute;
-    top: 50%;
-    right: -180px;
-    transform: translateY(-50%);
-    width: 640px;
-    height: 640px;
+    top: -20px;
+    right: -40px;
+    width: 420px;
+    height: 420px;
     background-image: url("/images/hero-globe.png");
     background-repeat: no-repeat;
     background-position: center;
@@ -46,44 +49,44 @@
     pointer-events: none;
     z-index: 0;
   }
-  
+
   .hero-content {
     position: relative;
     z-index: 2;
     max-width: 640px;
   }
-  
+
   .hero-eyebrow {
-    font-family: var(--font-mono);
+    font-family: var(--font-nav);
     font-size: 14px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-fg);
     margin: 0 0 16px;
   }
-  
+
   .hero-heading {
-    font-family: var(--font-nav);
-    font-weight: 400;
-    letter-spacing: 0.02em;
+    font-family: var(--font-heading);
+    font-weight: 900;
+    letter-spacing: 0.01em;
     font-size: clamp(32px, 5vw, 56px);
     line-height: 1.1;
     text-transform: uppercase;
     margin: 0 0 20px;
   }
-  
+
   .hero-subtext {
-    font-family: var(--font-body);
+    font-family: var(--font-nav);
     font-size: 16px;
     line-height: 1.5;
     color: #cfcfcf;
     max-width: 460px;
     margin: 0;
   }
-  
+
   .hero-photo {
     position: relative;
-    z-index: 3; /* above the globe */
+    z-index: 3;
     display: inline-block;
     background: #f4f4f4;
     padding: 12px 12px 40px;
@@ -91,7 +94,7 @@
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
     margin-top: 32px;
   }
-  
+
   .hero-photo img {
     display: block;
     width: 260px;
@@ -105,7 +108,7 @@
       gap: 60px;
       padding: 64px 34px;
     }
-  
+
     .hero-photo {
       margin-top: 0;
       flex-shrink: 0;
@@ -121,17 +124,23 @@
 
   <!-- Page content -->
   <main>
-    <section class="hero">
-      <div class="hero-content">
-        <p class="hero-eyebrow">Sup, I'm Iris.</p>
-        <h1 class="hero-heading">I turn creative ideas<br />into working technology.</h1>
-        <p class="hero-subtext">Web, software, systems, and automation built for the music world.</p>
-      </div>
- 
-      <div class="hero-photo">
-        <img src="/images/hero-photo.jpg" alt="Iris" />
-      </div>
-    </section>
+    <div class="hero-wrap">
+      <section class="hero">
+        <div class="hero-content">
+          <p class="hero-eyebrow">Sup, I'm Iris.</p>
+          <h1 class="hero-heading">I turn creative ideas<br />into working technology.</h1>
+          <p class="hero-subtext">Web, software, systems, and automation built for the music world.</p>
+        </div>
+
+        <div class="hero-photo">
+          <img src="/images/hero-photo.jpg" alt="Iris" />
+        </div>
+      </section>
+
+      <section class="work">
+        <!-- "MY WORK" section content -->
+      </section>
+    </div>
   </main>
 
   <script src="/components/helpers/text-helper.js" defer></script>

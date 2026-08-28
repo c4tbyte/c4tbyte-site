@@ -23,10 +23,12 @@ WORK_TEMPLATE.innerHTML = `
 
     position: relative;
     display: block;
+    overflow: hidden;
     background: var(--wc-bg);
     color: var(--wc-fg);
     font-family: var(--wc-font-body);
     padding: var(--wc-padding);
+    border-bottom: 1px solid var(--wc-border);
     box-sizing: border-box;
   }
 
@@ -35,8 +37,8 @@ WORK_TEMPLATE.innerHTML = `
     position: absolute;
     top: calc(-1 * var(--wc-padding));
     right: 0;
-    width: 640px;
-    height: calc(100% + var(--wc-padding) + 300px);
+    width: 480px;
+    height: calc(100% + var(--wc-padding));
     background-image: url("/images/showcase-bg.png");
     background-repeat: no-repeat;
     background-position: top right;

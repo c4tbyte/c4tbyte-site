@@ -4,7 +4,7 @@
   "rewrites": [
     { "source": "/", "destination": "/pages/home.html" },
     { "source": "/work", "destination": "/pages/work.html" },
-    { "source": "/concept-lab", "destination": "/pages/lab.html" },
+    { "source": "/lab", "destination": "/pages/lab.html" },
     { "source": "/about", "destination": "/pages/about.html" },
     { "source": "/services", "destination": "/pages/services.html" },
     { "source": "/contact", "destination": "/pages/contact.html" }

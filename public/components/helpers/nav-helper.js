@@ -1,12 +1,12 @@
 function renderSiteNav() {
   const navHTML = `
     <simple-nav
-      logo-src="images/nav-logo.png"
+      logo-src="/images/nav-logo.png"
       logo-alt="C4TBYTE"
       logo-href="/"
       links="
         Work|/work,
-        Concept//Lab|/concept-lab,
+        Concept//Lab|/lab,
         About|/about,
         Services|/services,
         Contact|/contact

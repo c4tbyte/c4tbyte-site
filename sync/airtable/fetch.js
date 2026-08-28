@@ -34,6 +34,7 @@ export async function buildManifest() {
       name,
       type: row.fields?.Type || "",
       role: row.fields?.Role || "",
+      description: row.fields?.Description || "",
       stack: row.fields?.Stack || [],
       implementations: row.fields?.Implementations || [],
       previewMedia: row.fields?.["Preview Media"] || "",

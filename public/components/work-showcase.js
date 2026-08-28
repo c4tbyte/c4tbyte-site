@@ -36,7 +36,7 @@ WORK_TEMPLATE.innerHTML = `
     top: calc(-1 * var(--wc-padding));
     right: 0;
     width: 480px;
-    height: calc(100% + var(--wc-padding) + 300px);
+    height: calc(100% + var(--wc-padding) + 500px);
     background-image: url("/images/showcase-bg.png");
     background-repeat: no-repeat;
     background-position: top right;
@@ -254,6 +254,10 @@ WORK_TEMPLATE.innerHTML = `
       <p class="meta-role"></p>
     </div>
     <div class="meta-block">
+      <h4>Description</h4>
+      <p class="meta-description"></p>
+    </div>
+    <div class="meta-block">
       <h4>Stack</h4>
       <div class="meta-stack pill-list"></div>
     </div>
@@ -370,6 +374,7 @@ class WorkShowcase extends HTMLElement {
     const previewImage = root.querySelector(".preview-image");
     const badgeEl = root.querySelector(".badge");
     const roleEl = root.querySelector(".meta-role");
+    const descriptionEl = root.querySelector(".meta-description");
     const stackEl = root.querySelector(".meta-stack");
     const implEl = root.querySelector(".meta-implementations");
 
@@ -381,6 +386,7 @@ class WorkShowcase extends HTMLElement {
 
     badgeEl.textContent = String(this._index + 1).padStart(2, "0");
     roleEl.textContent = item.role || "";
+    descriptionEl.textContent = item.description || "";
     stackEl.innerHTML = this._buildPills(item.stack);
     implEl.innerHTML = this._buildPills(item.implementations);
   }

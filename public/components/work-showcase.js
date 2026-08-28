@@ -35,12 +35,12 @@ WORK_TEMPLATE.innerHTML = `
     position: absolute;
     top: calc(-1 * var(--wc-padding));
     right: 0;
-    width: 420px;
+    width: 480px;
     height: calc(100% + var(--wc-padding));
     background-image: url("/images/showcase-bg.png");
     background-repeat: no-repeat;
     background-position: top right;
-    background-size: cover;
+    background-size: contain;
     opacity: 0.8;
     pointer-events: none;
     z-index: 0;

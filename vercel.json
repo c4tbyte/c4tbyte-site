@@ -2,11 +2,11 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/", "destination": "/pages/home.html" },
-    { "source": "/work", "destination": "/pages/work.html" },
-    { "source": "/lab", "destination": "/pages/lab.html" },
-    { "source": "/about", "destination": "/pages/about.html" },
-    { "source": "/services", "destination": "/pages/services.html" },
-    { "source": "/contact", "destination": "/pages/contact.html" }
+    { "source": "/", "destination": "/pages/home" },
+    { "source": "/work", "destination": "/pages/work" },
+    { "source": "/lab", "destination": "/pages/lab" },
+    { "source": "/about", "destination": "/pages/about" },
+    { "source": "/services", "destination": "/pages/services" },
+    { "source": "/contact", "destination": "/pages/contact" }
   ]
 }

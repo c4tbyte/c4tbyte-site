@@ -32,6 +32,7 @@ NAV_TEMPLATE.innerHTML = `
     display: block;
     font-family: var(--nav-font-family);
     background: var(--nav-bg-start);
+    border-bottom: 1px solid var(--nav-border-color);
   }
 
   * { box-sizing: border-box; }

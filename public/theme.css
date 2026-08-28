@@ -64,4 +64,5 @@ simple-nav {
   --nav-font-family: var(--font-nav);
   --nav-font-weight: 700;
   --nav-active-color: var(--color-accent);
+  --nav-border-color: #737373;
 }

@@ -73,12 +73,13 @@ WORK_TEMPLATE.innerHTML = `
 
   .item-name {
     display: block;
-    font-family: var(--wc-font-heading);
-    font-weight: 700;
-    letter-spacing: 0.01em;
+    font-family: var(--wc-font-body);
+    font-weight: 400;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     font-size: var(--wc-item-name-size);
     color: var(--wc-muted);
+    text-shadow: 0.3px 0 0 currentColor, -0.3px 0 0 currentColor;
     transition: color 0.15s ease, font-size 0.15s ease;
   }
 

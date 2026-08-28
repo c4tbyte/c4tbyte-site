@@ -7,6 +7,7 @@ async function getAirtableRows() {
   let offset;
   do {
     const url = new URL(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${TABLE_NAME}`);
+    url.searchParams.set("view", "Grid view");
     if (offset) url.searchParams.set("offset", offset);
     const res = await fetch(url, {
       headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` },

@@ -9,14 +9,22 @@ cloudinary.config({
 const ROOT_FOLDER = "work-previews";
 const KNOWN_SLOTS = ["background", "desktop", "mobile"];
 
-function parsePublicId(publicId) {
-  // "work-previews/armageddon-records/desktop" -> { slug: "armageddon-records", slot: "desktop" }
-  const parts = publicId.split("/");
-  if (parts.length < 3) return null;
-  const slug = parts[1];
-  const filename = parts[parts.length - 1].toLowerCase();
-  if (!KNOWN_SLOTS.includes(filename)) return null;
-  return { slug, slot: filename };
+function getSlug(resource) {
+  // Prefer the explicit "folder" field (reliable in Dynamic Folder Mode);
+  // fall back to parsing it out of public_id otherwise.
+  const folderPath =
+    resource.folder || resource.public_id.split("/").slice(0, -1).join("/");
+  const parts = folderPath.split("/").filter(Boolean);
+  // parts[0] should be "work-previews", parts[1] is the project slug
+  return parts.length >= 2 ? parts[1] : null;
+}
+
+function getSlot(resource) {
+  // Prefer display_name (what you see/edit in the Cloudinary UI).
+  // Falls back to the public_id's last segment if display_name isn't present
+  // (e.g. Fixed Folder Mode accounts, or older assets).
+  const raw = resource.display_name || resource.public_id.split("/").pop();
+  return (raw || "").toLowerCase().trim();
 }
 
 async function listResources(resourceType) {
@@ -39,10 +47,11 @@ export async function buildManifest() {
   const latest = {}; // key: "slug:slot" -> { url, created_at }
 
   for (const resource of all) {
-    const parsed = parsePublicId(resource.public_id);
-    if (!parsed) continue;
+    const slug = getSlug(resource);
+    const slot = getSlot(resource);
+    if (!slug || !KNOWN_SLOTS.includes(slot)) continue;
 
-    const key = `${parsed.slug}:${parsed.slot}`;
+    const key = `${slug}:${slot}`;
     const existing = latest[key];
     if (!existing || new Date(resource.created_at) > new Date(existing.created_at)) {
       latest[key] = { url: resource.secure_url, created_at: resource.created_at };

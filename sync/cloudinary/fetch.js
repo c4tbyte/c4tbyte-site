@@ -7,11 +7,16 @@ cloudinary.config({
 });
 
 const ROOT_FOLDER = "work-previews";
+const KNOWN_SLOTS = ["background", "desktop", "mobile"];
 
-function slugFromPublicId(publicId) {
-  // "work-previews/armageddon-records/preview" -> "armageddon-records"
+function parsePublicId(publicId) {
+  // "work-previews/armageddon-records/desktop" -> { slug: "armageddon-records", slot: "desktop" }
   const parts = publicId.split("/");
-  return parts.length >= 2 ? parts[1] : null;
+  if (parts.length < 3) return null;
+  const slug = parts[1];
+  const filename = parts[parts.length - 1].toLowerCase();
+  if (!KNOWN_SLOTS.includes(filename)) return null;
+  return { slug, slot: filename };
 }
 
 async function listResources(resourceType) {
@@ -31,24 +36,24 @@ export async function buildManifest() {
   ]);
 
   const all = [...videos, ...images];
-  const latestBySlug = {};
+  const latest = {}; // key: "slug:slot" -> { url, created_at }
 
   for (const resource of all) {
-    const slug = slugFromPublicId(resource.public_id);
-    if (!slug) continue;
+    const parsed = parsePublicId(resource.public_id);
+    if (!parsed) continue;
 
-    const existing = latestBySlug[slug];
+    const key = `${parsed.slug}:${parsed.slot}`;
+    const existing = latest[key];
     if (!existing || new Date(resource.created_at) > new Date(existing.created_at)) {
-      latestBySlug[slug] = {
-        url: resource.secure_url,
-        created_at: resource.created_at,
-      };
+      latest[key] = { url: resource.secure_url, created_at: resource.created_at };
     }
   }
 
   const mediaBySlug = {};
-  for (const [slug, data] of Object.entries(latestBySlug)) {
-    mediaBySlug[slug] = data.url;
+  for (const [key, data] of Object.entries(latest)) {
+    const [slug, slot] = key.split(":");
+    if (!mediaBySlug[slug]) mediaBySlug[slug] = {};
+    mediaBySlug[slug][slot] = data.url;
   }
 
   return {

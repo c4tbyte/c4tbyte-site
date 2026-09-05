@@ -16,10 +16,21 @@ export default async function handler(req, res) {
       getCloudinaryManifest(),
     ]);
 
+    const mediaBySlug = cloudinaryData.mediaBySlug || {};
+    const defaultMedia = mediaBySlug.default || {};
+
     const items = (airtable.items || []).map((item) => {
       const slug = slugify(item.name);
-      const previewMedia = cloudinaryData.mediaBySlug?.[slug] || "";
-      return { ...item, previewMedia };
+      const media = mediaBySlug[slug] || {};
+
+      return {
+        ...item,
+        preview: {
+          background: media.background || defaultMedia.background || "",
+          desktop: media.desktop || "",
+          mobile: media.mobile || "",
+        },
+      };
     });
 
     res.setHeader("Cache-Control", "public, max-age=60, stale-while-revalidate=300");

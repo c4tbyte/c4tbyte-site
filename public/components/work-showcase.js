@@ -20,6 +20,7 @@ WORK_TEMPLATE.innerHTML = `
     --wc-item-name-size-active: 26px;
     --wc-item-type-size: 11px;
     --wc-badge-size: 64px;
+    --wc-preview-border: #d9d9d9;
 
     position: relative;
     display: block;
@@ -37,11 +38,11 @@ WORK_TEMPLATE.innerHTML = `
     position: absolute;
     top: calc(-1 * var(--wc-padding));
     right: 0;
-    width: 750px;
+    width: 480px;
     height: calc(100% + var(--wc-padding));
     background-image: url("/images/showcase-bg.png");
     background-repeat: no-repeat;
-    background-position: top right;
+    background-position: bottom right;
     background-size: contain;
     opacity: 0.8;
     pointer-events: none;
@@ -51,8 +52,6 @@ WORK_TEMPLATE.innerHTML = `
   * { box-sizing: border-box; }
 
   h2 {
-    position: relative;
-    z-index: 1;
     margin: 0 0 var(--wc-item-gap);
     font-family: var(--wc-font-heading);
     font-size: 32px;
@@ -145,18 +144,59 @@ WORK_TEMPLATE.innerHTML = `
   }
 
   .preview-image {
+    position: relative;
     width: 100%;
     aspect-ratio: 16 / 10;
     background: var(--wc-panel);
     border: 1px solid var(--wc-border);
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
-  .preview-image img,
-  .preview-image video {
+  .preview-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .preview-bg img,
+  .preview-bg video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .preview-desktop {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 76%;
+    aspect-ratio: 16 / 10;
+    border: 2px solid var(--wc-preview-border, #d9d9d9);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .preview-mobile {
+    position: absolute;
+    z-index: 2;
+    right: 6%;
+    bottom: 6%;
+    width: 22%;
+    aspect-ratio: 9 / 16;
+    border: 2px solid var(--wc-preview-border, #d9d9d9);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.45);
+  }
+
+  .preview-desktop img,
+  .preview-desktop video,
+  .preview-mobile img,
+  .preview-mobile video {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -164,8 +204,14 @@ WORK_TEMPLATE.innerHTML = `
   }
 
   .preview-image .state-message {
+    position: relative;
+    z-index: 1;
     font-size: 13px;
     color: var(--wc-muted);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   /* ---- Meta column ---- */
@@ -416,18 +462,36 @@ class WorkShowcase extends HTMLElement {
   }
 
   _buildPreviewMedia(item) {
-    const src = item.previewMedia || item.previewImage || item.previewVideo || "";
+    const preview = item.preview || {};
+    const { background, desktop, mobile } = preview;
 
-    if (!src) {
+    if (!background && !desktop && !mobile) {
       return `<div class="state-message">No preview available</div>`;
     }
 
+    const bgTag = background
+      ? `<div class="preview-bg">${this._mediaTag(background, item.name, false)}</div>`
+      : "";
+
+    const desktopTag = desktop
+      ? `<div class="preview-desktop">${this._mediaTag(desktop, item.name + " — desktop")}</div>`
+      : "";
+
+    const mobileTag = mobile
+      ? `<div class="preview-mobile">${this._mediaTag(mobile, item.name + " — mobile")}</div>`
+      : "";
+
+    return bgTag + desktopTag + mobileTag;
+  }
+
+  _mediaTag(src, altLabel, autoplay = true) {
     const isVideo = /\.(mp4|webm|mov)(\?.*)?$/i.test(src);
     const safeSrc = window.TextHelper.escapeAttr(src);
-    const safeAlt = window.TextHelper.escapeAttr(item.name || "");
+    const safeAlt = window.TextHelper.escapeAttr(altLabel || "");
 
     if (isVideo) {
-      return `<video src="${safeSrc}" autoplay muted loop playsinline aria-label="${safeAlt}"></video>`;
+      const autoplayAttrs = autoplay ? "autoplay muted loop playsinline" : "muted loop playsinline";
+      return `<video src="${safeSrc}" ${autoplayAttrs} aria-label="${safeAlt}"></video>`;
     }
 
     // .gif, .png, .jpg, etc. — plain <img> autoplays gifs natively

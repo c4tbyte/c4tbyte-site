@@ -1,11 +1,17 @@
 import { put } from "@vercel/blob";
 import { buildManifest as buildAirtableManifest } from "../sync/airtable/fetch.js";
+import { buildManifest as buildCloudinaryManifest } from "../sync/cloudinary/fetch.js";
 
 const SOURCES = [
   {
     name: "airtable",
     blobPath: "airtable-manifest.json",
     build: buildAirtableManifest,
+  },
+  {
+    name: "cloudinary",
+    blobPath: "cloudinary-manifest.json",
+    build: buildCloudinaryManifest,
   },
 ];
 

@@ -14,6 +14,9 @@ PP_TEMPLATE.innerHTML = `
     --pp-padding: 34px;
     --pp-list-width: 260px;
     --pp-meta-width: 240px;
+    --pp-item-name-size: 20px;
+    --pp-item-name-size-active: 26px;
+    --pp-gallery-max-width: 620px;
 
     position: relative;
     display: block;
@@ -56,36 +59,46 @@ PP_TEMPLATE.innerHTML = `
   }
 
   .item-list li {
-    padding: 8px 0;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--pp-border);
     cursor: pointer;
+    transition: padding 0.15s ease;
+  }
+
+  .item-list li:first-child {
+    border-top: 1px solid var(--pp-border);
   }
 
   .item-name {
     display: block;
-    font-family: var(--pp-font-heading);
-    font-weight: 700;
-    letter-spacing: 0.02em;
+    font-family: var(--pp-font-body);
+    font-weight: 400;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    font-size: 15px;
+    font-size: var(--pp-item-name-size);
     color: var(--pp-muted);
-    transition: color 0.15s ease;
+    text-shadow: 0.3px 0 0 currentColor, -0.3px 0 0 currentColor;
+    transition: color 0.15s ease, font-size 0.15s ease;
   }
 
   .item-type {
     display: block;
     margin-top: 2px;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: var(--pp-label-tracking);
     text-transform: uppercase;
     color: var(--pp-muted);
     opacity: 0.7;
+    transition: color 0.15s ease;
   }
 
   .item-list li:hover .item-name,
   .item-list li.active .item-name {
     color: var(--pp-fg);
+    font-size: var(--pp-item-name-size-active);
   }
 
+  .item-list li:hover .item-type,
   .item-list li.active .item-type {
     color: var(--pp-fg);
   }
@@ -97,10 +110,11 @@ PP_TEMPLATE.innerHTML = `
 
   .detail-header {
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 16px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
     margin-bottom: 18px;
+    text-align: right;
   }
 
   .detail-name {
@@ -123,10 +137,12 @@ PP_TEMPLATE.innerHTML = `
   .gallery {
     position: relative;
     width: 100%;
+    max-width: var(--pp-gallery-max-width);
     aspect-ratio: 16 / 10;
     background: var(--pp-panel);
     border: 1px solid var(--pp-border);
     overflow: hidden;
+    margin: 0 auto;
   }
 
   .gallery-image {
@@ -174,10 +190,9 @@ PP_TEMPLATE.innerHTML = `
 
   .gallery-controls {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    margin-top: 14px;
+    justify-content: center;
+    max-width: var(--pp-gallery-max-width);
+    margin: 14px auto 0;
   }
 
   .thumbnails {
@@ -199,44 +214,6 @@ PP_TEMPLATE.innerHTML = `
 
   .thumbnail img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .thumbnail.active { opacity: 1; }
-
-  .autoplay-toggle {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    letter-spacing: var(--pp-label-tracking);
-    text-transform: uppercase;
-    color: var(--pp-muted);
-    flex-shrink: 0;
-  }
-
-  .switch {
-    position: relative;
-    width: 36px;
-    height: 20px;
-    background: var(--pp-panel);
-    border: 1px solid var(--pp-border);
-    border-radius: 999px;
-    cursor: pointer;
-  }
-
-  .switch::after {
-    content: "";
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 14px;
-    height: 14px;
-    background: var(--pp-muted);
-    border-radius: 50%;
-    transition: transform 0.2s ease, background 0.2s ease;
-  }
-
-  .switch.on::after {
-    transform: translateX(16px);
-    background: var(--pp-fg);
-  }
 
   .lower {
     display: flex;
@@ -300,6 +277,7 @@ PP_TEMPLATE.innerHTML = `
     .layout { flex-direction: column; }
     .list-col { max-height: none; flex-basis: auto; width: 100%; }
     .lower { flex-direction: column; }
+    .detail-header { align-items: flex-start; text-align: left; }
   }
 </style>
 
@@ -323,10 +301,6 @@ PP_TEMPLATE.innerHTML = `
 
     <div class="gallery-controls">
       <div class="thumbnails"></div>
-      <div class="autoplay-toggle">
-        <span>Autoplay</span>
-        <div class="switch" role="switch" aria-checked="false"></div>
-      </div>
     </div>
 
     <div class="lower">
@@ -362,18 +336,11 @@ class PortfolioPage extends HTMLElement {
     this._items = [];
     this._index = 0;
     this._galleryIndex = 0;
-    this._autoplay = false;
-    this._autoplayTimer = null;
   }
 
   connectedCallback() {
     this._render();
-    this._setupAutoplayToggle();
     this._loadData();
-  }
-
-  disconnectedCallback() {
-    this._stopAutoplay();
   }
 
   attributeChangedCallback() {
@@ -541,29 +508,6 @@ class PortfolioPage extends HTMLElement {
       return value.split("/").map((v) => v.trim()).filter(Boolean);
     }
     return [];
-  }
-
-  _setupAutoplayToggle() {
-    const toggle = this.shadowRoot.querySelector(".switch");
-    toggle.addEventListener("click", () => {
-      this._autoplay = !this._autoplay;
-      toggle.classList.toggle("on", this._autoplay);
-      toggle.setAttribute("aria-checked", String(this._autoplay));
-      if (this._autoplay) this._startAutoplay();
-      else this._stopAutoplay();
-    });
-  }
-
-  _startAutoplay() {
-    this._stopAutoplay();
-    this._autoplayTimer = setInterval(() => this._stepGallery(1), 3000);
-  }
-
-  _stopAutoplay() {
-    if (this._autoplayTimer) {
-      clearInterval(this._autoplayTimer);
-      this._autoplayTimer = null;
-    }
   }
 }
 

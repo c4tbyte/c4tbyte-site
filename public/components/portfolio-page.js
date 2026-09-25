@@ -92,7 +92,7 @@ PP_TEMPLATE.innerHTML = `
   .page-subtitle {
     display: block;
     margin-top: 4px;
-    font-size: 12px;
+    font-size: 15px;
     letter-spacing: var(--pp-label-tracking);
     text-transform: uppercase;
     color: var(--pp-muted);
@@ -266,6 +266,18 @@ PP_TEMPLATE.innerHTML = `
     min-width: 0;
   }
 
+  .client-logo-wrap {
+    margin-bottom: 22px;
+  }
+
+  .client-logo {
+    max-width: 100%;
+    max-height: 64px;
+    width: auto;
+    height: auto;
+    display: block;
+  }
+
   .meta-block {
     margin-bottom: 18px;
   }
@@ -413,6 +425,9 @@ PP_TEMPLATE.innerHTML = `
       </div>
 
       <div class="meta-col">
+        <div class="client-logo-wrap" hidden>
+          <img class="client-logo" alt="" />
+        </div>
         <div class="meta-block">
           <h4>Role</h4>
           <p class="meta-role"></p>
@@ -543,6 +558,7 @@ class PortfolioPage extends HTMLElement {
     this._setTint(item.tintColor);
     this._setBackdrop(item.preview && item.preview.backdrop);
     this._setTitleBackground(item.portfolioAssets && item.portfolioAssets["title-bg"]);
+    this._setClientLogo(item.portfolioAssets && item.portfolioAssets["client-logo"]);
 
     this._renderThumbnails();
     this._renderGalleryImage();
@@ -601,6 +617,18 @@ class PortfolioPage extends HTMLElement {
     const safeUrl = window.TextHelper.escapeAttr(url);
     block.style.backgroundImage = `url("${safeUrl}")`;
     block.classList.add("has-bg");
+  }
+
+  _setClientLogo(url) {
+    const wrap = this.shadowRoot.querySelector(".client-logo-wrap");
+    const img = this.shadowRoot.querySelector(".client-logo");
+    if (!url) {
+      wrap.hidden = true;
+      img.src = "";
+      return;
+    }
+    img.src = url;
+    wrap.hidden = false;
   }
 
   _getGallery() {

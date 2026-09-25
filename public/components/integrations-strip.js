@@ -102,6 +102,7 @@ IX_TEMPLATE.innerHTML = `
     color: var(--ix-fg);
     font-family: var(--ix-font-body);
     padding: var(--ix-padding);
+    border-bottom: 1px solid var(--ix-border);
     box-sizing: border-box;
   }
 

@@ -30,10 +30,11 @@ export default async function handler(req, res) {
           desktop: media.desktop || "",
           mobile: media.mobile || "",
         },
+        gallery: media.gallery || [],
       };
     });
 
-    res.setHeader("Cache-Control", "public, max-age=60, stale-while-revalidate=300");
+    res.setHeader("Cache-Control", "no-store");
     return res.status(200).json({
       generatedAt: airtable.generatedAt,
       items,

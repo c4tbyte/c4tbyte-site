@@ -20,13 +20,11 @@ function getSlot(resource) {
 }
 
 async function listResources(resourceType) {
-  const result = await cloudinary.api.resources({
-    type: "upload",
-    resource_type: resourceType,
-    prefix: `${ROOT_FOLDER}/`,
-    max_results: 500,
-    tags: true,
-  });
+  const result = await cloudinary.search
+    .expression(`resource_type:${resourceType} AND folder:${ROOT_FOLDER}/*`)
+    .with_field("tags")
+    .max_results(500)
+    .execute();
   return result.resources || [];
 }
 

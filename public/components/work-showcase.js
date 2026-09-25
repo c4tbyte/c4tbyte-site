@@ -155,17 +155,8 @@ WORK_TEMPLATE.innerHTML = `
     justify-content: center;
   }
 
-  .preview-desktop {
-    width: 82%;
-    aspect-ratio: 16 / 10;
-    border: 2px solid var(--wc-preview-border, #d9d9d9);
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  }
-
-  .preview-desktop img,
-  .preview-desktop video {
+  .preview-image img,
+  .preview-image video {
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -429,7 +420,7 @@ class WorkShowcase extends HTMLElement {
       return `<div class="state-message">No preview available</div>`;
     }
 
-    return `<div class="preview-desktop">${this._mediaTag(featured, item.name)}</div>`;
+    return this._mediaTag(featured, item.name);
   }
 
   _mediaTag(src, altLabel, autoplay = true) {

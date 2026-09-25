@@ -91,3 +91,9 @@ integrations-strip {
     --ss-font-heading: var(--font-heading);
     --ss-font-body: var(--font-nav);
   }
+
+/* ---- About fetch theming ---- */
+about-fetch {
+  --af-font-heading: var(--font-heading);
+  --af-font-body: var(--font-nav);
+}

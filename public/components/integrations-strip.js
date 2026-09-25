@@ -2,39 +2,63 @@ const CATEGORIES = [
   {
     label: "Ecommerce",
     bubbles: [
-      { name: "Big Cartel", src: "/images/logos/big-cartel.png", shape: "pill", x: 0.30, y: 0.30 },
-      { name: "Shopify", src: "/images/logos/shopify.png", shape: "circle", x: 0.68, y: 0.24 },
-      { name: "Stripe", src: "/images/logos/stripe.png", shape: "circle", invertOnly: true, x: 0.78, y: 0.60 },
+      { name: "Big Cartel", src: "/images/logos/big-cartel.png" },
+      { name: "Shopify", src: "/images/logos/shopify.png" },
+      { name: "Stripe", src: "/images/logos/stripe.png", invertOnly: true },
     ],
   },
   {
     label: "Ticketing & Events",
     bubbles: [
-      { name: "Ticketmaster", src: "/images/logos/ticketmaster.png", shape: "pill", x: 0.32, y: 0.28 },
-      { name: "Songkick", src: "/images/logos/songkick.png", shape: "circle", x: 0.78, y: 0.22 },
-      { name: "Bandsintown", src: "/images/logos/bandsintown.png", shape: "circle", x: 0.24, y: 0.72 },
-      { name: "Eventbrite", src: "/images/logos/eventbrite.png", shape: "circle", invertOnly: true, x: 0.72, y: 0.70 },
+      { name: "Ticketmaster", src: "/images/logos/ticketmaster.png" },
+      { name: "Songkick", src: "/images/logos/songkick.png" },
+      { name: "Bandsintown", src: "/images/logos/bandsintown.png" },
+      { name: "Eventbrite", src: "/images/logos/eventbrite.png", invertOnly: true },
     ],
   },
   {
     label: "Streaming",
     bubbles: [
-      { name: "Spotify", src: "/images/logos/spotify.png", shape: "circle", x: 0.26, y: 0.28 },
-      { name: "SoundCloud", src: "/images/logos/soundcloud.png", shape: "circle", x: 0.74, y: 0.26 },
-      { name: "Apple Music", src: "/images/logos/apple-music.png", shape: "pill", x: 0.32, y: 0.72 },
-      { name: "Bandcamp", src: "/images/logos/bandcamp.png", shape: "circle", x: 0.78, y: 0.70 },
+      { name: "Spotify", src: "/images/logos/spotify.png" },
+      { name: "SoundCloud", src: "/images/logos/soundcloud.png" },
+      { name: "Apple Music", src: "/images/logos/apple-music.png" },
+      { name: "Bandcamp", src: "/images/logos/bandcamp.png" },
     ],
   },
   {
     label: "Fan Engagement",
     bubbles: [
-      { name: "YouTube", src: "/images/logos/youtube.png", shape: "pill", x: 0.30, y: 0.28 },
-      { name: "Discord", src: "/images/logos/discord.png", shape: "circle", x: 0.78, y: 0.26 },
-      { name: "Patreon", src: "/images/logos/patreon.png", shape: "circle", x: 0.26, y: 0.72 },
-      { name: "Mailchimp", src: "/images/logos/mailchimp.png", shape: "circle", x: 0.76, y: 0.70 },
+      { name: "YouTube", src: "/images/logos/youtube.png" },
+      { name: "Discord", src: "/images/logos/discord.png" },
+      { name: "Patreon", src: "/images/logos/patreon.png" },
+      { name: "Mailchimp", src: "/images/logos/mailchimp.png" },
     ],
   },
 ];
+
+function getSlots(count) {
+  if (count === 3) {
+    return [
+      { x: 50, y: 28, w: 50, h: 38 },
+      { x: 27, y: 74, w: 38, h: 38 },
+      { x: 73, y: 74, w: 38, h: 38 },
+    ];
+  }
+  if (count === 4) {
+    return [
+      { x: 27, y: 27, w: 38, h: 38 },
+      { x: 73, y: 27, w: 38, h: 38 },
+      { x: 27, y: 73, w: 38, h: 38 },
+      { x: 73, y: 73, w: 38, h: 38 },
+    ];
+  }
+  return Array.from({ length: count }, (_, i) => ({
+    x: ((i + 1) / (count + 1)) * 100,
+    y: 50,
+    w: 80 / count,
+    h: 60,
+  }));
+}
 
 const IX_TEMPLATE = document.createElement("template");
 IX_TEMPLATE.innerHTML = `
@@ -119,13 +143,21 @@ IX_TEMPLATE.innerHTML = `
 
   .bubble {
     position: absolute;
-    top: 0;
-    left: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    will-change: transform, width, height;
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform 0.25s ease;
     cursor: default;
+  }
+
+  .bubble.is-hovered {
+    transform: translate(-50%, -50%) scale(1.3);
+    z-index: 2;
+  }
+
+  .bubble.is-shrunk {
+    transform: translate(-50%, -50%) scale(0.72);
   }
 
   .bubble img {
@@ -161,169 +193,6 @@ IX_TEMPLATE.innerHTML = `
 <div class="categories"></div>
 `;
 
-class Bubble {
-  constructor(el, def, fieldW, fieldH) {
-    this.el = el;
-    this.def = def;
-    this.fieldW = fieldW;
-    this.fieldH = fieldH;
-
-    const isPill = def.shape === "pill";
-    this.baseW = isPill ? 130 : 84;
-    this.baseH = isPill ? 56 : 84;
-    this.hoverScale = 1.35;
-
-    this.w = this.baseW;
-    this.h = this.baseH;
-    this.targetW = this.baseW;
-    this.targetH = this.baseH;
-
-    const fieldPadding = 28;
-    const usableW = fieldW - fieldPadding * 2;
-    const usableH = fieldH - fieldPadding * 2;
-
-    this.x = fieldPadding + def.x * usableW;
-    this.y = fieldPadding + def.y * usableH;
-
-    this.restX = this.x;
-    this.restY = this.y;
-
-    this.hovered = false;
-  }
-
-  radius() {
-    return Math.max(this.w, this.h) / 2;
-  }
-
-  setHovered(isHovered) {
-    this.hovered = isHovered;
-    this.targetW = isHovered ? this.baseW * this.hoverScale : this.baseW;
-    this.targetH = isHovered ? this.baseH * this.hoverScale : this.baseH;
-  }
-
-  resize(fieldW, fieldH) {
-    this.fieldW = fieldW;
-    this.fieldH = fieldH;
-
-    const fieldPadding = 28;
-    const usableW = fieldW - fieldPadding * 2;
-    const usableH = fieldH - fieldPadding * 2;
-
-    this.restX = fieldPadding + this.def.x * usableW;
-    this.restY = fieldPadding + this.def.y * usableH;
-
-    if (!this.hovered) {
-      this.x = this.restX;
-      this.y = this.restY;
-    }
-  }
-
-  update() {
-    this.w += (this.targetW - this.w) * 0.15;
-    this.h += (this.targetH - this.h) * 0.15;
-
-    if (!this.hovered) {
-      this.x += (this.restX - this.x) * 0.08;
-      this.y += (this.restY - this.y) * 0.08;
-    }
-  }
-
-  clampToBounds() {
-    const r = this.radius();
-    const padding = 28;
-    this.x = Math.min(Math.max(this.x, padding + r), this.fieldW - padding - r);
-    this.y = Math.min(Math.max(this.y, padding + r), this.fieldH - padding - r);
-  }
-
-  render() {
-    this.el.style.width = `${this.w}px`;
-    this.el.style.height = `${this.h}px`;
-    this.el.style.transform = `translate(${this.x - this.w / 2}px, ${this.y - this.h / 2}px)`;
-  }
-}
-
-class BubbleField {
-  constructor(container, defs) {
-    this.container = container;
-    this.fieldW = container.clientWidth;
-    this.fieldH = container.clientHeight;
-
-    this.bubbles = defs.map((def) => {
-      const el = document.createElement("div");
-      el.className = "bubble";
-      el.innerHTML = `<img src="${def.src}" alt="${def.name}" loading="lazy" class="${def.invertOnly ? "invert-only" : ""}" />`;
-      container.appendChild(el);
-
-      const bubble = new Bubble(el, def, this.fieldW, this.fieldH);
-
-      el.addEventListener("mouseenter", () => bubble.setHovered(true));
-      el.addEventListener("mouseleave", () => bubble.setHovered(false));
-
-      return bubble;
-    });
-
-    this._resizeObserver = new ResizeObserver((entries) => {
-      const entry = entries[0];
-      if (!entry) return;
-      const { width, height } = entry.contentRect;
-      this.fieldW = width;
-      this.fieldH = height;
-      this.bubbles.forEach((b) => b.resize(width, height));
-    });
-    this._resizeObserver.observe(container);
-
-    this._raf = requestAnimationFrame(this._loop.bind(this));
-  }
-
-  _resolveCollisions() {
-    const padding = 6;
-    for (let i = 0; i < this.bubbles.length; i++) {
-      for (let j = i + 1; j < this.bubbles.length; j++) {
-        const a = this.bubbles[i];
-        const b = this.bubbles[j];
-        const dx = b.x - a.x;
-        const dy = b.y - a.y;
-        const dist = Math.sqrt(dx * dx + dy * dy) || 0.01;
-        const minDist = a.radius() + b.radius() + padding;
-
-        if (dist < minDist) {
-          const overlap = (minDist - dist) / 2;
-          const nx = dx / dist;
-          const ny = dy / dist;
-
-          const aMovable = !a.hovered;
-          const bMovable = !b.hovered;
-
-          if (aMovable) {
-            a.x -= nx * overlap * (bMovable ? 1 : 2);
-            a.y -= ny * overlap * (bMovable ? 1 : 2);
-          }
-          if (bMovable) {
-            b.x += nx * overlap * (aMovable ? 1 : 2);
-            b.y += ny * overlap * (aMovable ? 1 : 2);
-          }
-        }
-      }
-    }
-  }
-
-  _loop() {
-    this.bubbles.forEach((b) => b.update());
-    this._resolveCollisions();
-    this.bubbles.forEach((b) => {
-      b.clampToBounds();
-      b.render();
-    });
-
-    this._raf = requestAnimationFrame(this._loop.bind(this));
-  }
-
-  destroy() {
-    if (this._raf) cancelAnimationFrame(this._raf);
-    if (this._resizeObserver) this._resizeObserver.disconnect();
-  }
-}
-
 class IntegrationsStrip extends HTMLElement {
   static get observedAttributes() {
     return ["title", "subtext"];
@@ -333,7 +202,6 @@ class IntegrationsStrip extends HTMLElement {
     super();
     this.attachShadow({ mode: "open" });
     this.shadowRoot.appendChild(IX_TEMPLATE.content.cloneNode(true));
-    this._fields = [];
   }
 
   connectedCallback() {
@@ -357,8 +225,6 @@ class IntegrationsStrip extends HTMLElement {
   _buildCategories() {
     const container = this.shadowRoot.querySelector(".categories");
     container.innerHTML = "";
-    this._fields.forEach((f) => f.destroy());
-    this._fields = [];
 
     CATEGORIES.forEach((category) => {
       const categoryEl = document.createElement("div");
@@ -367,6 +233,39 @@ class IntegrationsStrip extends HTMLElement {
       const fieldEl = document.createElement("div");
       fieldEl.className = "field";
 
+      const slots = getSlots(category.bubbles.length);
+      const bubbleEls = category.bubbles.map((def, i) => {
+        const slot = slots[i];
+        const el = document.createElement("div");
+        el.className = "bubble";
+        el.style.left = `${slot.x}%`;
+        el.style.top = `${slot.y}%`;
+        el.style.width = `${slot.w}%`;
+        el.style.height = `${slot.h}%`;
+        el.innerHTML = `<img src="${def.src}" alt="${def.name}" loading="lazy" class="${def.invertOnly ? "invert-only" : ""}" />`;
+        fieldEl.appendChild(el);
+        return el;
+      });
+
+      bubbleEls.forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+          bubbleEls.forEach((other) => {
+            if (other === el) {
+              other.classList.add("is-hovered");
+              other.classList.remove("is-shrunk");
+            } else {
+              other.classList.add("is-shrunk");
+              other.classList.remove("is-hovered");
+            }
+          });
+        });
+        el.addEventListener("mouseleave", () => {
+          bubbleEls.forEach((other) => {
+            other.classList.remove("is-hovered", "is-shrunk");
+          });
+        });
+      });
+
       const labelEl = document.createElement("div");
       labelEl.className = "category-label";
       labelEl.textContent = category.label;
@@ -374,8 +273,6 @@ class IntegrationsStrip extends HTMLElement {
       categoryEl.appendChild(fieldEl);
       categoryEl.appendChild(labelEl);
       container.appendChild(categoryEl);
-
-      this._fields.push(new BubbleField(fieldEl, category.bubbles));
     });
   }
 }

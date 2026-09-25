@@ -16,7 +16,7 @@ PP_TEMPLATE.innerHTML = `
     --pp-meta-width: 240px;
     --pp-item-name-size: 20px;
     --pp-item-name-size-active: 26px;
-    --pp-gallery-max-width: 620px;
+    --pp-gallery-max-width: 100%;
 
     position: relative;
     display: block;

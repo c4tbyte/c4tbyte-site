@@ -19,6 +19,7 @@ const CATEGORIES = [
   },
   {
     label: "Streaming",
+    layout: "grid2x2",
     bubbles: [
       { name: "Spotify", src: "/images/logos/spotify.png" },
       { name: "SoundCloud", src: "/images/logos/soundcloud.png" },
@@ -51,6 +52,14 @@ function getSlots(count, layout) {
       { x: 50, y: 26, w: 200, h: 46 },
       { x: 32, y: 68, w: 84, h: 84 },
       { x: 68, y: 68, w: 84, h: 84 },
+    ];
+  }
+  if (layout === "grid2x2") {
+    return [
+      { x: 26, y: 28, w: 120, h: 64 },
+      { x: 74, y: 28, w: 120, h: 64 },
+      { x: 26, y: 72, w: 120, h: 64 },
+      { x: 74, y: 72, w: 120, h: 64 },
     ];
   }
   if (count === 4) {

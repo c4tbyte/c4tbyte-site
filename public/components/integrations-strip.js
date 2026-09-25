@@ -39,24 +39,24 @@ const CATEGORIES = [
 function getSlots(count) {
   if (count === 3) {
     return [
-      { x: 50, y: 32, w: 30, h: 26 },
-      { x: 33, y: 70, w: 28, h: 28 },
-      { x: 67, y: 70, w: 28, h: 28 },
+      { x: 50, y: 32, w: 96, h: 62 },
+      { x: 33, y: 70, w: 90, h: 68 },
+      { x: 67, y: 70, w: 90, h: 68 },
     ];
   }
   if (count === 4) {
     return [
-      { x: 33, y: 33, w: 28, h: 28 },
-      { x: 67, y: 33, w: 28, h: 28 },
-      { x: 33, y: 67, w: 28, h: 28 },
-      { x: 67, y: 67, w: 28, h: 28 },
+      { x: 33, y: 33, w: 90, h: 68 },
+      { x: 67, y: 33, w: 90, h: 68 },
+      { x: 33, y: 67, w: 90, h: 68 },
+      { x: 67, y: 67, w: 90, h: 68 },
     ];
   }
   return Array.from({ length: count }, (_, i) => ({
     x: ((i + 1) / (count + 1)) * 100,
     y: 50,
-    w: 60 / count,
-    h: 45,
+    w: 90,
+    h: 68,
   }));
 }
 
@@ -74,7 +74,7 @@ IX_TEMPLATE.innerHTML = `
     --ix-label-tracking: 0.08em;
     --ix-padding: 28px;
     --ix-box-width: 320px;
-    --ix-box-height: 240px;
+    --ix-box-height: 180px;
     --ix-box-gap: 20px;
 
     position: relative;
@@ -231,8 +231,8 @@ class IntegrationsStrip extends HTMLElement {
         el.className = "bubble";
         el.style.left = `${slot.x}%`;
         el.style.top = `${slot.y}%`;
-        el.style.width = `${slot.w}%`;
-        el.style.height = `${slot.h}%`;
+        el.style.width = `${slot.w}px`;
+        el.style.height = `${slot.h}px`;
         el.innerHTML = `<img src="${def.src}" alt="${def.name}" loading="lazy" class="${def.invertOnly ? "invert-only" : ""}" />`;
         fieldEl.appendChild(el);
         return el;

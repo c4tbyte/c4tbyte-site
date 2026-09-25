@@ -97,7 +97,7 @@ AF_TEMPLATE.innerHTML = `
     white-space: pre;
     margin: 0;
     flex-shrink: 0;
-    background: linear-gradient(to bottom, #4caf50, #0d2b0d);
+    background: linear-gradient(to bottom, #66d66a, #1f4d1f);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;

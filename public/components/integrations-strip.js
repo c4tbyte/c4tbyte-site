@@ -40,8 +40,8 @@ function getSlots(count) {
   if (count === 3) {
     return [
       { x: 50, y: 26, w: 200, h: 46 },
-      { x: 36, y: 72, w: 84, h: 84 },
-      { x: 64, y: 72, w: 84, h: 84 },
+      { x: 32, y: 68, w: 84, h: 84 },
+      { x: 68, y: 68, w: 84, h: 84 },
     ];
   }
   if (count === 4) {

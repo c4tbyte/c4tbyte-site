@@ -96,8 +96,11 @@ AF_TEMPLATE.innerHTML = `
     line-height: 1;
     white-space: pre;
     margin: 0;
-    color: var(--af-label-color);
     flex-shrink: 0;
+    background: linear-gradient(to bottom, #4caf50, #0d2b0d);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   .info {

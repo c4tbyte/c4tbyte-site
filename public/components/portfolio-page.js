@@ -92,7 +92,7 @@ PP_TEMPLATE.innerHTML = `
   .page-subtitle {
     display: block;
     margin-top: 4px;
-    font-size: 15px;
+    font-size: 12px;
     letter-spacing: var(--pp-label-tracking);
     text-transform: uppercase;
     color: var(--pp-muted);
@@ -200,7 +200,7 @@ PP_TEMPLATE.innerHTML = `
   .gallery-image video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
   }
 

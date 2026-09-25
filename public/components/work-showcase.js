@@ -168,7 +168,7 @@ WORK_TEMPLATE.innerHTML = `
   .preview-desktop video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
   }
 
@@ -367,9 +367,7 @@ class WorkShowcase extends HTMLElement {
 
     listEl.querySelectorAll("li").forEach((li) => {
       const i = Number(li.dataset.index);
-      li.addEventListener("mouseenter", () => this._showItem(i));
       li.addEventListener("click", () => this._showItem(i));
-      li.addEventListener("focus", () => this._showItem(i));
     });
   }
 

@@ -51,8 +51,8 @@ IX_TEMPLATE.innerHTML = `
     --ix-font-body: 'Arial Narrow', 'Helvetica Neue', sans-serif;
     --ix-label-tracking: 0.08em;
     --ix-padding: 28px;
-    --ix-box-width: 260px;
-    --ix-box-height: 220px;
+    --ix-box-width: 320px;
+    --ix-box-height: 240px;
     --ix-box-gap: 20px;
 
     position: relative;
@@ -162,18 +162,22 @@ class Bubble {
     this.targetW = this.baseW;
     this.targetH = this.baseH;
 
+    const fieldPadding = 28;
+    const usableW = fieldW - fieldPadding * 2;
+    const usableH = fieldH - fieldPadding * 2;
+
     const columns = Math.ceil(Math.sqrt(total));
     const rows = Math.ceil(total / columns);
-    const cellW = fieldW / columns;
-    const cellH = fieldH / rows;
+    const cellW = usableW / columns;
+    const cellH = usableH / rows;
     const col = index % columns;
     const row = Math.floor(index / columns);
 
-    const jitterX = (Math.random() - 0.5) * cellW * 0.4;
-    const jitterY = (Math.random() - 0.5) * cellH * 0.4;
+    const jitterX = (Math.random() - 0.5) * cellW * 0.2;
+    const jitterY = (Math.random() - 0.5) * cellH * 0.2;
 
-    this.x = (col + 0.5) * cellW + jitterX;
-    this.y = (row + 0.5) * cellH + jitterY;
+    this.x = fieldPadding + (col + 0.5) * cellW + jitterX;
+    this.y = fieldPadding + (row + 0.5) * cellH + jitterY;
 
     this.restX = this.x;
     this.restY = this.y;
@@ -203,8 +207,9 @@ class Bubble {
 
   clampToBounds() {
     const r = this.radius();
-    this.x = Math.min(Math.max(this.x, r), this.fieldW - r);
-    this.y = Math.min(Math.max(this.y, r), this.fieldH - r);
+    const padding = 28;
+    this.x = Math.min(Math.max(this.x, padding + r), this.fieldW - padding - r);
+    this.y = Math.min(Math.max(this.y, padding + r), this.fieldH - padding - r);
   }
 
   render() {

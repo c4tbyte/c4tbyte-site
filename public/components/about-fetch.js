@@ -44,7 +44,7 @@ AF_TEMPLATE.innerHTML = `
     --af-font-mono: 'IBM Plex Mono', 'Courier New', monospace;
     --af-label-tracking: 0.08em;
     --af-padding: 28px;
-    --af-ascii-size: 8px;
+    --af-ascii-size: 5px;
 
     position: relative;
     display: block;
@@ -102,7 +102,7 @@ AF_TEMPLATE.innerHTML = `
 
   .info {
     font-family: var(--af-font-mono);
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.7;
   }
 
@@ -177,10 +177,17 @@ class AboutFetch extends HTMLElement {
     this._loadAscii();
     this._buildInfo();
     this._startUptime();
+
+    this._resizeHandler = () => {
+      const asciiEl = this.shadowRoot.querySelector(".ascii");
+      if (asciiEl && asciiEl.textContent) this._syncAsciiSize(asciiEl);
+    };
+    window.addEventListener("resize", this._resizeHandler);
   }
 
   disconnectedCallback() {
     if (this._uptimeInterval) clearInterval(this._uptimeInterval);
+    if (this._resizeHandler) window.removeEventListener("resize", this._resizeHandler);
   }
 
   attributeChangedCallback() {
@@ -205,9 +212,21 @@ class AboutFetch extends HTMLElement {
       const res = await fetch(this.asciiSrc);
       if (!res.ok) throw new Error(`Status ${res.status}`);
       asciiEl.textContent = await res.text();
+      this._syncAsciiSize(asciiEl);
     } catch (err) {
       console.error("[about-fetch] failed to load ASCII art:", err);
       asciiEl.textContent = "";
+    }
+  }
+
+  _syncAsciiSize(asciiEl) {
+    const infoEl = this.shadowRoot.querySelector(".info");
+    const lineCount = (asciiEl.textContent.match(/\n/g) || []).length + 1;
+    const infoHeight = infoEl.offsetHeight;
+
+    if (lineCount > 0 && infoHeight > 0) {
+      const fontSize = infoHeight / lineCount;
+      asciiEl.style.fontSize = `${fontSize}px`;
     }
   }
 

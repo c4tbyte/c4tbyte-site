@@ -39,9 +39,9 @@ const CATEGORIES = [
 function getSlots(count) {
   if (count === 3) {
     return [
-      { x: 40, y: 28, w: 96, h: 56 },
-      { x: 24, y: 76, w: 80, h: 64 },
-      { x: 50, y: 76, w: 80, h: 64 },
+      { x: 50, y: 26, w: 200, h: 46 },
+      { x: 36, y: 72, w: 84, h: 84 },
+      { x: 64, y: 72, w: 84, h: 84 },
     ];
   }
   if (count === 4) {
@@ -127,13 +127,14 @@ IX_TEMPLATE.innerHTML = `
     position: relative;
     width: var(--ix-box-width);
     height: var(--ix-box-height);
-    background: var(--ix-panel);
+    background: transparent;
     border: 1px solid var(--ix-border);
     overflow: hidden;
   }
 
   .category-label {
     margin-top: 10px;
+    font-family: var(--ix-font-heading);
     font-size: 12px;
     letter-spacing: var(--ix-label-tracking);
     text-transform: uppercase;

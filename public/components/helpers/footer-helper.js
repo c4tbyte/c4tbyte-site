@@ -21,7 +21,7 @@ function renderSiteFooter() {
 
         Info:
           Contact|/contact,
-          Booking|/contact
+          Legal|/legal
       "
       connect-heading="Stay connected"
       connect-text="Got a project? Let's build something."

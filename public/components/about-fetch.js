@@ -84,7 +84,7 @@ AF_TEMPLATE.innerHTML = `
     display: flex;
     align-items: flex-start;
     gap: 32px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
     max-width: 900px;
     margin: 0 auto;
@@ -118,6 +118,11 @@ AF_TEMPLATE.innerHTML = `
 
   .field {
     white-space: nowrap;
+  }
+
+  .field.wrap {
+    white-space: normal;
+    max-width: 480px;
   }
 
   .label {
@@ -220,7 +225,7 @@ class AboutFetch extends HTMLElement {
           html += `<div class="field"><span class="label">Uptime:</span> <span class="value" id="af-uptime">Loading…</span></div>`;
           return;
         }
-        html += `<div class="field"><span class="label">${this._escape(field.label)}:</span> <span class="value">${this._escape(field.value)}</span></div>`;
+        html += `<div class="field${field.wrap ? " wrap" : ""}"><span class="label">${this._escape(field.label)}:</span> <span class="value">${this._escape(field.value)}</span></div>`;
       });
       if (sectionIndex < FIELD_SECTIONS.length - 1) {
         html += `<div class="section-gap"></div>`;

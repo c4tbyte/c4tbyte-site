@@ -54,8 +54,29 @@ PP_TEMPLATE.innerHTML = `
   }
 
   .page-title-block {
-    text-align: right;
+    text-align: center;
     margin-bottom: 28px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .page-title-block.has-bg {
+    position: relative;
+    padding: 48px 24px;
+  }
+
+  .page-title-block.has-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.55);
+    z-index: 0;
+  }
+
+  .page-title-block.has-bg .page-title,
+  .page-title-block.has-bg .page-subtitle {
+    position: relative;
+    z-index: 1;
   }
 
   .page-title {
@@ -362,7 +383,7 @@ PP_TEMPLATE.innerHTML = `
     .layout { flex-direction: column; }
     .list-col { max-height: none; flex-basis: auto; width: 100%; }
     .preview-row { flex-direction: column; }
-    .page-title-block { text-align: left; }
+    .page-title-block { text-align: center; }
   }
 </style>
 
@@ -521,6 +542,7 @@ class PortfolioPage extends HTMLElement {
 
     this._setTint(item.tintColor);
     this._setBackdrop(item.preview && item.preview.backdrop);
+    this._setTitleBackground(item.portfolioAssets && item.portfolioAssets["title-bg"]);
 
     this._renderThumbnails();
     this._renderGalleryImage();
@@ -567,6 +589,18 @@ class PortfolioPage extends HTMLElement {
     const safeUrl = window.TextHelper.escapeAttr(url);
     layer.style.backgroundImage = `url("${safeUrl}")`;
     layer.classList.add("visible");
+  }
+
+  _setTitleBackground(url) {
+    const block = this.shadowRoot.querySelector(".page-title-block");
+    if (!url) {
+      block.style.backgroundImage = "";
+      block.classList.remove("has-bg");
+      return;
+    }
+    const safeUrl = window.TextHelper.escapeAttr(url);
+    block.style.backgroundImage = `url("${safeUrl}")`;
+    block.classList.add("has-bg");
   }
 
   _getGallery() {

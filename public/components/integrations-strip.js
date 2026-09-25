@@ -39,17 +39,17 @@ const CATEGORIES = [
 function getSlots(count) {
   if (count === 3) {
     return [
-      { x: 50, y: 22, w: 96, h: 62 },
-      { x: 33, y: 77, w: 90, h: 68 },
-      { x: 67, y: 77, w: 90, h: 68 },
+      { x: 40, y: 28, w: 96, h: 56 },
+      { x: 24, y: 76, w: 80, h: 64 },
+      { x: 50, y: 76, w: 80, h: 64 },
     ];
   }
   if (count === 4) {
     return [
-      { x: 33, y: 23, w: 90, h: 68 },
-      { x: 67, y: 23, w: 90, h: 68 },
-      { x: 33, y: 77, w: 90, h: 68 },
-      { x: 67, y: 77, w: 90, h: 68 },
+      { x: 26, y: 26, w: 88, h: 60 },
+      { x: 58, y: 26, w: 80, h: 60 },
+      { x: 20, y: 76, w: 80, h: 64 },
+      { x: 46, y: 76, w: 80, h: 64 },
     ];
   }
   return Array.from({ length: count }, (_, i) => ({

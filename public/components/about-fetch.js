@@ -84,7 +84,7 @@ AF_TEMPLATE.innerHTML = `
     max-width: fit-content;
     margin: 0 auto;
     border: 1px solid var(--af-border);
-    background: rgba(255, 255, 255, 0.02);
+    background: #141414;
   }
 
   .terminal-titlebar {
@@ -93,6 +93,7 @@ AF_TEMPLATE.innerHTML = `
     gap: 8px;
     padding: 10px 14px;
     border-bottom: 1px solid var(--af-border);
+    background: #c9c9c9;
   }
 
   .terminal-dots {
@@ -118,7 +119,7 @@ AF_TEMPLATE.innerHTML = `
     font-family: var(--af-font-mono);
     font-size: 12px;
     letter-spacing: 0.05em;
-    color: var(--af-muted);
+    color: #0a0a0a;
     margin-right: 32px;
   }
 
@@ -151,7 +152,7 @@ AF_TEMPLATE.innerHTML = `
 
   .info {
     font-family: var(--af-font-mono);
-    font-size: 12px;
+    font-size: 10.5px;
     line-height: 1.7;
   }
 

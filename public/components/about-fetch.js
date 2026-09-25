@@ -23,9 +23,9 @@ const FIELD_SECTIONS = [
   },
   {
     fields: [
-      { label: "Hobbies.Software", value: "Self-hosting, Linux ricing, digital paranoia, bootleg VPN provider" },
-      { label: "Hobbies.Technical", value: "Homelab, console modding & repair, VLANing my entire house" },
-      { label: "Hobbies.Other", value: "Going to shows & festivals, disappearing into the woods alone for days, trading memes" },
+      { label: "Hobbies.Software", value: "Self-hosting, Linux ricing, digital paranoia, bootleg VPN provider", wrap: true },
+      { label: "Hobbies.Technical", value: "Homelab, console modding & repair, VLANing my entire house", wrap: true },
+      { label: "Hobbies.Other", value: "Going to shows & festivals, disappearing into the woods alone for days, trading memes", wrap: true },
     ],
   },
 ];
@@ -38,7 +38,7 @@ AF_TEMPLATE.innerHTML = `
     --af-fg: #ffffff;
     --af-muted: #9a9a9a;
     --af-border: var(--border-color, #737373);
-    --af-label-color: #ffffff;
+    --af-label-color: #33ff33;
     --af-font-heading: 'Arial Narrow', 'Helvetica Neue', sans-serif;
     --af-font-body: 'Arial Narrow', 'Helvetica Neue', sans-serif;
     --af-font-mono: 'IBM Plex Mono', 'Courier New', monospace;
@@ -82,11 +82,11 @@ AF_TEMPLATE.innerHTML = `
 
   .fetch {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 32px;
     flex-wrap: nowrap;
     justify-content: center;
-    max-width: 900px;
+    width: fit-content;
     margin: 0 auto;
   }
 

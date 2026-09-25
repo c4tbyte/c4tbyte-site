@@ -42,7 +42,7 @@ const CATEGORIES = [
 function getSlots(count, layout) {
   if (layout === "oneThree") {
     return [
-      { x: 50, y: 28, w: 200, h: 46 },
+      { x: 50, y: 22, w: 200, h: 46 },
       { x: 22, y: 68, w: 70, h: 70 },
       { x: 50, y: 68, w: 70, h: 70 },
       { x: 78, y: 68, w: 70, h: 70 },
@@ -50,7 +50,7 @@ function getSlots(count, layout) {
   }
   if (count === 3) {
     return [
-      { x: 50, y: 28, w: 200, h: 46 },
+      { x: 50, y: 22, w: 200, h: 46 },
       { x: 32, y: 68, w: 84, h: 84 },
       { x: 68, y: 68, w: 84, h: 84 },
     ];
@@ -87,7 +87,7 @@ IX_TEMPLATE.innerHTML = `
     --ix-fg: #ffffff;
     --ix-muted: #9a9a9a;
     --ix-panel: #131313;
-    --ix-border: #2b2b2b;
+    --ix-border: var(--border-color, #737373);
     --ix-font-heading: 'Arial Narrow', 'Helvetica Neue', sans-serif;
     --ix-font-body: 'Arial Narrow', 'Helvetica Neue', sans-serif;
     --ix-label-tracking: 0.08em;

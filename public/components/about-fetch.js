@@ -38,7 +38,7 @@ AF_TEMPLATE.innerHTML = `
     --af-fg: #ffffff;
     --af-muted: #9a9a9a;
     --af-border: var(--border-color, #737373);
-    --af-label-color: #4dcc4d;
+    --af-label-color: #33ff33;
     --af-font-heading: 'Arial Narrow', 'Helvetica Neue', sans-serif;
     --af-font-body: 'Arial Narrow', 'Helvetica Neue', sans-serif;
     --af-font-mono: 'IBM Plex Mono', 'Courier New', monospace;
@@ -131,7 +131,6 @@ AF_TEMPLATE.innerHTML = `
   .label {
     color: var(--af-label-color);
     font-weight: 700;
-    text-shadow: 0.3px 0 0 currentColor, -0.3px 0 0 currentColor;
   }
 
   .value {
@@ -198,7 +197,7 @@ class AboutFetch extends HTMLElement {
     if (this.isConnected) this._render();
   }
 
-  get titleText() { return this.getAttribute("title") || "About"; }
+  get titleText() { return this.getAttribute("title") || ""; }
   get subtextValue() { return this.getAttribute("subtext") || ""; }
   get asciiSrc() { return this.getAttribute("ascii-src") || "/images/ascii/c4tbyte.txt"; }
   get foundedDate() { return this.getAttribute("founded-date") || ""; }
@@ -206,7 +205,13 @@ class AboutFetch extends HTMLElement {
 
   _render() {
     const root = this.shadowRoot;
-    root.querySelector("h2").textContent = this.titleText;
+    const h2 = root.querySelector("h2");
+    if (this.titleText.trim()) {
+      h2.textContent = this.titleText;
+      h2.style.display = "";
+    } else {
+      h2.style.display = "none";
+    }
     root.querySelector(".subtext").textContent = this.subtextValue;
   }
 

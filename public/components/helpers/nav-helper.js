@@ -6,7 +6,7 @@ function renderSiteNav() {
       logo-href="/"
       links="
         Work|/work,
-        Concept//Lab|/lab,
+        BackAlley|/backalley,
         About|/about,
         Services|/services,
         Contact|/contact

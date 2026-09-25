@@ -96,7 +96,7 @@ AF_TEMPLATE.innerHTML = `
     line-height: 1;
     white-space: pre;
     margin: 0;
-    color: var(--af-fg);
+    color: var(--af-label-color);
     flex-shrink: 0;
   }
 

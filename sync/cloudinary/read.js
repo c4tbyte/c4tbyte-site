@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 
 const MANIFEST_PATH = "cloudinary-manifest.json";
-const IN_MEMORY_TTL = 5 * 60 * 1000;
+const IN_MEMORY_TTL = 10 * 1000; // TEMP: shortened for testing — restore to 5 * 60 * 1000 when done
 let memoryCache = null;
 
 async function readFromBlob() {

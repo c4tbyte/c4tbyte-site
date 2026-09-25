@@ -87,13 +87,19 @@ integrations-strip {
 }
 
 /* ---- Stack strip theming ---- */
-  stack-strip {
-    --ss-font-heading: var(--font-heading);
-    --ss-font-body: var(--font-nav);
-  }
+stack-strip {
+  --ss-font-heading: var(--font-heading);
+  --ss-font-body: var(--font-nav);
+}
 
 /* ---- About fetch theming ---- */
 about-fetch {
   --af-font-heading: var(--font-heading);
   --af-font-body: var(--font-nav);
+}
+
+/* ---- Portfolio page theming ---- */
+portfolio-page {
+     --pp-font-heading: var(--font-heading);
+     --pp-font-body: var(--font-nav);
 }

@@ -10,7 +10,9 @@ const ROOT_FOLDER = "work-previews";
 
 function getFolderParts(resource) {
   const folderPath =
-    resource.folder || resource.public_id.split("/").slice(0, -1).join("/");
+    resource.asset_folder ||
+    resource.folder ||
+    resource.public_id.split("/").slice(0, -1).join("/");
   return folderPath.split("/").filter(Boolean);
 }
 
@@ -21,7 +23,7 @@ function getSlot(resource) {
 
 async function listResources(resourceType) {
   const result = await cloudinary.search
-    .expression(`resource_type:${resourceType} AND folder:${ROOT_FOLDER}/*`)
+    .expression(`resource_type:${resourceType} AND asset_folder:${ROOT_FOLDER}/*`)
     .with_field("tags")
     .max_results(500)
     .execute();

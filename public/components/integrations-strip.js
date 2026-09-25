@@ -147,17 +147,19 @@ IX_TEMPLATE.innerHTML = `
     align-items: center;
     justify-content: center;
     transform: translate(-50%, -50%) scale(1);
-    transition: transform 0.25s ease;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
     cursor: default;
   }
 
   .bubble.is-hovered {
     transform: translate(-50%, -50%) scale(1.3);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     z-index: 2;
   }
 
   .bubble.is-shrunk {
     transform: translate(-50%, -50%) scale(0.72);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .bubble img {

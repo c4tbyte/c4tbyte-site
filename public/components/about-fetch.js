@@ -131,6 +131,7 @@ AF_TEMPLATE.innerHTML = `
   .label {
     color: var(--af-label-color);
     font-weight: 700;
+    text-shadow: 0.3px 0 0 currentColor, -0.3px 0 0 currentColor;
   }
 
   .value {

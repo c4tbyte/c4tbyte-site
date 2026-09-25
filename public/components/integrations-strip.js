@@ -9,6 +9,7 @@ const CATEGORIES = [
   },
   {
     label: "Ticketing & Events",
+    layout: "oneThree",
     bubbles: [
       { name: "Ticketmaster", src: "/images/logos/ticketmaster.png" },
       { name: "Songkick", src: "/images/logos/songkick.png" },
@@ -36,7 +37,15 @@ const CATEGORIES = [
   },
 ];
 
-function getSlots(count) {
+function getSlots(count, layout) {
+  if (layout === "oneThree") {
+    return [
+      { x: 50, y: 26, w: 200, h: 46 },
+      { x: 25, y: 68, w: 76, h: 76 },
+      { x: 50, y: 68, w: 76, h: 76 },
+      { x: 75, y: 68, w: 76, h: 76 },
+    ];
+  }
   if (count === 3) {
     return [
       { x: 50, y: 26, w: 200, h: 46 },
@@ -225,7 +234,7 @@ class IntegrationsStrip extends HTMLElement {
       const fieldEl = document.createElement("div");
       fieldEl.className = "field";
 
-      const slots = getSlots(category.bubbles.length);
+      const slots = getSlots(category.bubbles.length, category.layout);
       const bubbleEls = category.bubbles.map((def, i) => {
         const slot = slots[i];
         const el = document.createElement("div");

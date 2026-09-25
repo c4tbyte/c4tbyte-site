@@ -38,7 +38,7 @@ AF_TEMPLATE.innerHTML = `
     --af-fg: #ffffff;
     --af-muted: #9a9a9a;
     --af-border: var(--border-color, #737373);
-    --af-label-color: #4dcc4d;
+    --af-label-color: #33ff33;
     --af-font-heading: 'Arial Narrow', 'Helvetica Neue', sans-serif;
     --af-font-body: 'Arial Narrow', 'Helvetica Neue', sans-serif;
     --af-font-mono: 'IBM Plex Mono', 'Courier New', monospace;
@@ -78,6 +78,52 @@ AF_TEMPLATE.innerHTML = `
     font-size: 18px;
     letter-spacing: 0.08em;
     color: #cfcfcf;
+  }
+
+  .terminal-window {
+    max-width: fit-content;
+    margin: 0 auto;
+    border: 1px solid var(--af-border);
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .terminal-titlebar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--af-border);
+  }
+
+  .terminal-dots {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .terminal-dots span {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    display: block;
+  }
+
+  .terminal-dots span:nth-child(1) { background: #ff5f56; }
+  .terminal-dots span:nth-child(2) { background: #ffbd2e; }
+  .terminal-dots span:nth-child(3) { background: #27c93f; }
+
+  .terminal-title {
+    flex: 1;
+    text-align: center;
+    font-family: var(--af-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--af-muted);
+    margin-right: 32px;
+  }
+
+  .terminal-body {
+    padding: 28px;
   }
 
   .fetch {
@@ -157,15 +203,25 @@ AF_TEMPLATE.innerHTML = `
   <h2 part="title"></h2>
   <p class="subtext" part="subtext"></p>
 </div>
-<div class="fetch">
-  <pre class="ascii"></pre>
-  <div class="info"></div>
+<div class="terminal-window">
+  <div class="terminal-titlebar">
+    <div class="terminal-dots">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="terminal-title" part="terminal-title">Terminal — About Me</div>
+  </div>
+  <div class="terminal-body">
+    <div class="fetch">
+      <pre class="ascii"></pre>
+      <div class="info"></div>
+    </div>
+  </div>
 </div>
 `;
 
 class AboutFetch extends HTMLElement {
   static get observedAttributes() {
-    return ["title", "subtext", "ascii-src", "founded-date", "whoami"];
+    return ["title", "subtext", "ascii-src", "founded-date", "whoami", "terminal-title"];
   }
 
   constructor() {
@@ -202,6 +258,7 @@ class AboutFetch extends HTMLElement {
   get asciiSrc() { return this.getAttribute("ascii-src") || "/images/ascii/c4tbyte.txt"; }
   get foundedDate() { return this.getAttribute("founded-date") || ""; }
   get whoamiText() { return this.getAttribute("whoami") || "me@c4tbyte"; }
+  get terminalTitle() { return this.getAttribute("terminal-title") || "Terminal — About Me"; }
 
   _render() {
     const root = this.shadowRoot;
@@ -213,6 +270,7 @@ class AboutFetch extends HTMLElement {
       h2.style.display = "none";
     }
     root.querySelector(".subtext").textContent = this.subtextValue;
+    root.querySelector(".terminal-title").textContent = this.terminalTitle;
   }
 
   async _loadAscii() {

@@ -38,7 +38,7 @@ AF_TEMPLATE.innerHTML = `
     --af-fg: #ffffff;
     --af-muted: #9a9a9a;
     --af-border: var(--border-color, #737373);
-    --af-label-color: #33ff33;
+    --af-label-color: #4dcc4d;
     --af-font-heading: 'Arial Narrow', 'Helvetica Neue', sans-serif;
     --af-font-body: 'Arial Narrow', 'Helvetica Neue', sans-serif;
     --af-font-mono: 'IBM Plex Mono', 'Courier New', monospace;

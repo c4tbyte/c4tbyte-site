@@ -134,15 +134,24 @@ PP_TEMPLATE.innerHTML = `
     white-space: nowrap;
   }
 
+  .preview-row {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+  }
+
+  .gallery-wrap {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
   .gallery {
     position: relative;
     width: 100%;
-    max-width: var(--pp-gallery-max-width);
     aspect-ratio: 16 / 10;
     background: var(--pp-panel);
     border: 1px solid var(--pp-border);
     overflow: hidden;
-    margin: 0 auto;
   }
 
   .gallery-image {
@@ -191,8 +200,7 @@ PP_TEMPLATE.innerHTML = `
   .gallery-controls {
     display: flex;
     justify-content: center;
-    max-width: var(--pp-gallery-max-width);
-    margin: 14px auto 0;
+    margin-top: 14px;
   }
 
   .thumbnails {
@@ -214,21 +222,6 @@ PP_TEMPLATE.innerHTML = `
 
   .thumbnail img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .thumbnail.active { opacity: 1; }
-
-  .lower {
-    display: flex;
-    gap: 40px;
-    margin-top: 28px;
-    align-items: flex-start;
-  }
-
-  .description {
-    flex: 1 1 auto;
-    min-width: 0;
-    font-size: 14px;
-    line-height: 1.7;
-    color: #cfcfcf;
-  }
 
   .meta-col {
     flex: 0 0 var(--pp-meta-width);
@@ -273,10 +266,18 @@ PP_TEMPLATE.innerHTML = `
     white-space: nowrap;
   }
 
+  .description-block {
+    margin-top: 32px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #cfcfcf;
+    max-width: 760px;
+  }
+
   @media (max-width: 860px) {
     .layout { flex-direction: column; }
     .list-col { max-height: none; flex-basis: auto; width: 100%; }
-    .lower { flex-direction: column; }
+    .preview-row { flex-direction: column; }
     .detail-header { align-items: flex-start; text-align: left; }
   }
 </style>
@@ -293,18 +294,18 @@ PP_TEMPLATE.innerHTML = `
       <span class="detail-type"></span>
     </div>
 
-    <div class="gallery">
-      <button class="gallery-arrow prev" aria-label="Previous image" hidden>&#8249;</button>
-      <div class="gallery-image"><div class="state-message">Loading…</div></div>
-      <button class="gallery-arrow next" aria-label="Next image" hidden>&#8250;</button>
-    </div>
+    <div class="preview-row">
+      <div class="gallery-wrap">
+        <div class="gallery">
+          <button class="gallery-arrow prev" aria-label="Previous image" hidden>&#8249;</button>
+          <div class="gallery-image"><div class="state-message">Loading…</div></div>
+          <button class="gallery-arrow next" aria-label="Next image" hidden>&#8250;</button>
+        </div>
+        <div class="gallery-controls">
+          <div class="thumbnails"></div>
+        </div>
+      </div>
 
-    <div class="gallery-controls">
-      <div class="thumbnails"></div>
-    </div>
-
-    <div class="lower">
-      <p class="description"></p>
       <div class="meta-col">
         <div class="meta-block">
           <h4>Role</h4>
@@ -320,6 +321,8 @@ PP_TEMPLATE.innerHTML = `
         </div>
       </div>
     </div>
+
+    <p class="description-block"></p>
   </div>
 </div>
 `;
@@ -419,7 +422,7 @@ class PortfolioPage extends HTMLElement {
 
     root.querySelector(".detail-name").textContent = item.name || "";
     root.querySelector(".detail-type").textContent = item.type || "";
-    root.querySelector(".description").textContent = item.description || "";
+    root.querySelector(".description-block").textContent = item.description || "";
     root.querySelector(".meta-role").textContent = item.role || "";
     root.querySelector(".meta-stack").innerHTML = this._buildPills(item.stack);
     root.querySelector(".meta-implementations").innerHTML = this._buildPills(item.implementations);

@@ -78,3 +78,10 @@ work-showcase {
   --wc-accent: var(--color-fg);
   --wc-border: var(--color-fg);
 }
+
+/* ---- Integrations strip theming ---- */
+integrations-strip {
+  --ix-bg: transparent;
+  --ix-font-heading: var(--font-heading);
+  --ix-font-body: var(--font-nav);
+}

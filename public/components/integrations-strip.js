@@ -74,7 +74,7 @@ IX_TEMPLATE.innerHTML = `
   h2 {
     margin: 0 0 8px;
     font-family: var(--ix-font-heading);
-    font-size: 26px;
+    font-size: 32px;
     font-weight: 700;
     letter-spacing: var(--ix-label-tracking);
     text-transform: uppercase;
@@ -82,8 +82,10 @@ IX_TEMPLATE.innerHTML = `
 
   .subtext {
     margin: 0;
-    font-size: 14px;
-    color: var(--ix-muted);
+    font-family: var(--ix-font-body);
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    color: #cfcfcf;
   }
 
   .categories {
@@ -124,17 +126,15 @@ IX_TEMPLATE.innerHTML = `
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--ix-bubble-bg);
-    border-radius: 999px;
     will-change: transform, width, height;
     cursor: default;
-    padding: 0 10px;
   }
 
   .bubble img {
-    max-width: 78%;
-    max-height: 60%;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
+    filter: brightness(0) invert(1);
   }
 </style>
 
@@ -146,24 +146,34 @@ IX_TEMPLATE.innerHTML = `
 `;
 
 class Bubble {
-  constructor(el, def, fieldW, fieldH) {
+  constructor(el, def, fieldW, fieldH, index, total) {
     this.el = el;
     this.def = def;
     this.fieldW = fieldW;
     this.fieldH = fieldH;
 
     const isPill = def.shape === "pill";
-    this.baseW = isPill ? 92 : 56;
-    this.baseH = isPill ? 40 : 56;
-    this.hoverScale = 1.4;
+    this.baseW = isPill ? 130 : 84;
+    this.baseH = isPill ? 56 : 84;
+    this.hoverScale = 1.35;
 
     this.w = this.baseW;
     this.h = this.baseH;
     this.targetW = this.baseW;
     this.targetH = this.baseH;
 
-    this.x = Math.random() * (fieldW - this.baseW) + this.baseW / 2;
-    this.y = Math.random() * (fieldH - this.baseH) + this.baseH / 2;
+    const columns = Math.ceil(Math.sqrt(total));
+    const rows = Math.ceil(total / columns);
+    const cellW = fieldW / columns;
+    const cellH = fieldH / rows;
+    const col = index % columns;
+    const row = Math.floor(index / columns);
+
+    const jitterX = (Math.random() - 0.5) * cellW * 0.4;
+    const jitterY = (Math.random() - 0.5) * cellH * 0.4;
+
+    this.x = (col + 0.5) * cellW + jitterX;
+    this.y = (row + 0.5) * cellH + jitterY;
 
     this.restX = this.x;
     this.restY = this.y;
@@ -210,13 +220,13 @@ class BubbleField {
     this.fieldW = container.clientWidth;
     this.fieldH = container.clientHeight;
 
-    this.bubbles = defs.map((def) => {
+    this.bubbles = defs.map((def, index) => {
       const el = document.createElement("div");
       el.className = "bubble";
       el.innerHTML = `<img src="${def.src}" alt="${def.name}" loading="lazy" />`;
       container.appendChild(el);
 
-      const bubble = new Bubble(el, def, this.fieldW, this.fieldH);
+      const bubble = new Bubble(el, def, this.fieldW, this.fieldH, index, defs.length);
 
       el.addEventListener("mouseenter", () => bubble.setHovered(true));
       el.addEventListener("mouseleave", () => bubble.setHovered(false));

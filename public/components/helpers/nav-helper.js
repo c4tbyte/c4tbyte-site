@@ -6,10 +6,10 @@ function renderSiteNav() {
       logo-href="/"
       links="
         Work|/work,
-        BackAlley|/backalley,
         About|/about,
         Services|/services,
-        Contact|/contact
+        Contact|/contact,
+        BackAlley|/backalley
       "
     ></simple-nav>
   `;

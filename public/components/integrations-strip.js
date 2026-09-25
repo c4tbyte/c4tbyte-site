@@ -2,36 +2,36 @@ const CATEGORIES = [
   {
     label: "Ecommerce",
     bubbles: [
-      { name: "Big Cartel", src: "/images/logos/big-cartel.png", shape: "pill" },
-      { name: "Shopify", src: "/images/logos/shopify.png", shape: "circle" },
-      { name: "Stripe", src: "/images/logos/stripe.png", shape: "circle" },
+      { name: "Big Cartel", src: "/images/logos/big-cartel.png", shape: "pill", x: 0.30, y: 0.30 },
+      { name: "Shopify", src: "/images/logos/shopify.png", shape: "circle", x: 0.68, y: 0.24 },
+      { name: "Stripe", src: "/images/logos/stripe.png", shape: "circle", invertOnly: true, x: 0.78, y: 0.60 },
     ],
   },
   {
     label: "Ticketing & Events",
     bubbles: [
-      { name: "Ticketmaster", src: "/images/logos/ticketmaster.png", shape: "pill" },
-      { name: "Songkick", src: "/images/logos/songkick.png", shape: "circle" },
-      { name: "Bandsintown", src: "/images/logos/bandsintown.png", shape: "circle" },
-      { name: "Eventbrite", src: "/images/logos/eventbrite.png", shape: "circle" },
+      { name: "Ticketmaster", src: "/images/logos/ticketmaster.png", shape: "pill", x: 0.32, y: 0.28 },
+      { name: "Songkick", src: "/images/logos/songkick.png", shape: "circle", x: 0.78, y: 0.22 },
+      { name: "Bandsintown", src: "/images/logos/bandsintown.png", shape: "circle", x: 0.24, y: 0.72 },
+      { name: "Eventbrite", src: "/images/logos/eventbrite.png", shape: "circle", invertOnly: true, x: 0.72, y: 0.70 },
     ],
   },
   {
     label: "Streaming",
     bubbles: [
-      { name: "Spotify", src: "/images/logos/spotify.png", shape: "circle" },
-      { name: "SoundCloud", src: "/images/logos/soundcloud.png", shape: "circle" },
-      { name: "Apple Music", src: "/images/logos/apple-music.png", shape: "pill" },
-      { name: "Bandcamp", src: "/images/logos/bandcamp.png", shape: "circle" },
+      { name: "Spotify", src: "/images/logos/spotify.png", shape: "circle", x: 0.26, y: 0.28 },
+      { name: "SoundCloud", src: "/images/logos/soundcloud.png", shape: "circle", x: 0.74, y: 0.26 },
+      { name: "Apple Music", src: "/images/logos/apple-music.png", shape: "pill", x: 0.32, y: 0.72 },
+      { name: "Bandcamp", src: "/images/logos/bandcamp.png", shape: "circle", x: 0.78, y: 0.70 },
     ],
   },
   {
     label: "Fan Engagement",
     bubbles: [
-      { name: "YouTube", src: "/images/logos/youtube.png", shape: "pill" },
-      { name: "Discord", src: "/images/logos/discord.png", shape: "circle" },
-      { name: "Patreon", src: "/images/logos/patreon.png", shape: "circle" },
-      { name: "Mailchimp", src: "/images/logos/mailchimp.png", shape: "circle" },
+      { name: "YouTube", src: "/images/logos/youtube.png", shape: "pill", x: 0.30, y: 0.28 },
+      { name: "Discord", src: "/images/logos/discord.png", shape: "circle", x: 0.78, y: 0.26 },
+      { name: "Patreon", src: "/images/logos/patreon.png", shape: "circle", x: 0.26, y: 0.72 },
+      { name: "Mailchimp", src: "/images/logos/mailchimp.png", shape: "circle", x: 0.76, y: 0.70 },
     ],
   },
 ];
@@ -45,8 +45,6 @@ IX_TEMPLATE.innerHTML = `
     --ix-muted: #9a9a9a;
     --ix-panel: #131313;
     --ix-border: #2b2b2b;
-    --ix-bubble-bg: #ffffff;
-    --ix-bubble-fg: #0a0a0a;
     --ix-font-heading: 'Arial Narrow', 'Helvetica Neue', sans-serif;
     --ix-font-body: 'Arial Narrow', 'Helvetica Neue', sans-serif;
     --ix-label-tracking: 0.08em;
@@ -136,6 +134,24 @@ IX_TEMPLATE.innerHTML = `
     object-fit: contain;
     filter: brightness(0) invert(1);
   }
+
+  .bubble img.invert-only {
+    filter: invert(1);
+  }
+
+  @media (max-width: 720px) {
+    :host {
+      --ix-box-width: 260px;
+      --ix-box-height: 200px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    :host {
+      --ix-box-width: 220px;
+      --ix-box-height: 180px;
+    }
+  }
 </style>
 
 <div class="header">
@@ -146,7 +162,7 @@ IX_TEMPLATE.innerHTML = `
 `;
 
 class Bubble {
-  constructor(el, def, fieldW, fieldH, index, total) {
+  constructor(el, def, fieldW, fieldH) {
     this.el = el;
     this.def = def;
     this.fieldW = fieldW;
@@ -166,18 +182,8 @@ class Bubble {
     const usableW = fieldW - fieldPadding * 2;
     const usableH = fieldH - fieldPadding * 2;
 
-    const columns = Math.ceil(Math.sqrt(total));
-    const rows = Math.ceil(total / columns);
-    const cellW = usableW / columns;
-    const cellH = usableH / rows;
-    const col = index % columns;
-    const row = Math.floor(index / columns);
-
-    const jitterX = (Math.random() - 0.5) * cellW * 0.2;
-    const jitterY = (Math.random() - 0.5) * cellH * 0.2;
-
-    this.x = fieldPadding + (col + 0.5) * cellW + jitterX;
-    this.y = fieldPadding + (row + 0.5) * cellH + jitterY;
+    this.x = fieldPadding + def.x * usableW;
+    this.y = fieldPadding + def.y * usableH;
 
     this.restX = this.x;
     this.restY = this.y;
@@ -193,6 +199,23 @@ class Bubble {
     this.hovered = isHovered;
     this.targetW = isHovered ? this.baseW * this.hoverScale : this.baseW;
     this.targetH = isHovered ? this.baseH * this.hoverScale : this.baseH;
+  }
+
+  resize(fieldW, fieldH) {
+    this.fieldW = fieldW;
+    this.fieldH = fieldH;
+
+    const fieldPadding = 28;
+    const usableW = fieldW - fieldPadding * 2;
+    const usableH = fieldH - fieldPadding * 2;
+
+    this.restX = fieldPadding + this.def.x * usableW;
+    this.restY = fieldPadding + this.def.y * usableH;
+
+    if (!this.hovered) {
+      this.x = this.restX;
+      this.y = this.restY;
+    }
   }
 
   update() {
@@ -225,13 +248,13 @@ class BubbleField {
     this.fieldW = container.clientWidth;
     this.fieldH = container.clientHeight;
 
-    this.bubbles = defs.map((def, index) => {
+    this.bubbles = defs.map((def) => {
       const el = document.createElement("div");
       el.className = "bubble";
-      el.innerHTML = `<img src="${def.src}" alt="${def.name}" loading="lazy" />`;
+      el.innerHTML = `<img src="${def.src}" alt="${def.name}" loading="lazy" class="${def.invertOnly ? "invert-only" : ""}" />`;
       container.appendChild(el);
 
-      const bubble = new Bubble(el, def, this.fieldW, this.fieldH, index, defs.length);
+      const bubble = new Bubble(el, def, this.fieldW, this.fieldH);
 
       el.addEventListener("mouseenter", () => bubble.setHovered(true));
       el.addEventListener("mouseleave", () => bubble.setHovered(false));
@@ -239,7 +262,16 @@ class BubbleField {
       return bubble;
     });
 
-    this._lastTime = performance.now();
+    this._resizeObserver = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (!entry) return;
+      const { width, height } = entry.contentRect;
+      this.fieldW = width;
+      this.fieldH = height;
+      this.bubbles.forEach((b) => b.resize(width, height));
+    });
+    this._resizeObserver.observe(container);
+
     this._raf = requestAnimationFrame(this._loop.bind(this));
   }
 
@@ -275,10 +307,7 @@ class BubbleField {
     }
   }
 
-  _loop(now) {
-    const dt = Math.min(now - this._lastTime, 50);
-    this._lastTime = now;
-
+  _loop() {
     this.bubbles.forEach((b) => b.update());
     this._resolveCollisions();
     this.bubbles.forEach((b) => {
@@ -291,6 +320,7 @@ class BubbleField {
 
   destroy() {
     if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._resizeObserver) this._resizeObserver.disconnect();
   }
 }
 

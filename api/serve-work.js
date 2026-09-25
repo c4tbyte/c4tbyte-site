@@ -18,19 +18,21 @@ export default async function handler(req, res) {
 
     const mediaBySlug = cloudinaryData.mediaBySlug || {};
     const defaultMedia = mediaBySlug.default || {};
+    const defaultPortfolio = defaultMedia.portfolio || {};
 
     const items = (airtable.items || []).map((item) => {
       const slug = slugify(item.name);
       const media = mediaBySlug[slug] || {};
+      const portfolio = media.portfolio || {};
 
       return {
         ...item,
         preview: {
-          background: media.background || defaultMedia.background || "",
-          desktop: media.desktop || "",
-          mobile: media.mobile || "",
+          featured: media.featured || "",
+          backdrop: portfolio.backdrop || defaultPortfolio.backdrop || "",
         },
         gallery: media.gallery || [],
+        portfolioAssets: { ...defaultPortfolio, ...portfolio },
       };
     });
 

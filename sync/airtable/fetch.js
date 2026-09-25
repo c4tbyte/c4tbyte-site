@@ -35,9 +35,12 @@ export async function buildManifest() {
       type: row.fields?.Type || "",
       role: row.fields?.Role || "",
       description: row.fields?.Description || "",
+      content: row.fields?.Content || "",
       stack: row.fields?.Stack || [],
       implementations: row.fields?.Implementations || [],
       previewMedia: row.fields?.["Preview Media"] || "",
+      color: row.fields?.Color || "",
+      tintColor: row.fields?.["Tint Color"] || "",
     });
   }
 

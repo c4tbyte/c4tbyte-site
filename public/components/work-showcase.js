@@ -150,29 +150,13 @@ WORK_TEMPLATE.innerHTML = `
     background: var(--wc-panel);
     border: 1px solid var(--wc-border);
     overflow: hidden;
-  }
-
-  .preview-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-  }
-
-  .preview-bg img,
-  .preview-bg video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .preview-desktop {
-    position: absolute;
-    z-index: 1;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 76%;
+    width: 82%;
     aspect-ratio: 16 / 10;
     border: 2px solid var(--wc-preview-border, #d9d9d9);
     border-radius: 8px;
@@ -180,23 +164,8 @@ WORK_TEMPLATE.innerHTML = `
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
   }
 
-  .preview-mobile {
-    position: absolute;
-    z-index: 2;
-    right: 6%;
-    bottom: 6%;
-    width: 22%;
-    aspect-ratio: 9 / 16;
-    border: 2px solid var(--wc-preview-border, #d9d9d9);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.45);
-  }
-
   .preview-desktop img,
-  .preview-desktop video,
-  .preview-mobile img,
-  .preview-mobile video {
+  .preview-desktop video {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -204,14 +173,8 @@ WORK_TEMPLATE.innerHTML = `
   }
 
   .preview-image .state-message {
-    position: relative;
-    z-index: 1;
     font-size: 13px;
     color: var(--wc-muted);
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
   /* ---- Meta column ---- */
@@ -462,26 +425,13 @@ class WorkShowcase extends HTMLElement {
   }
 
   _buildPreviewMedia(item) {
-    const preview = item.preview || {};
-    const { background, desktop, mobile } = preview;
+    const featured = item.preview && item.preview.featured;
 
-    if (!background && !desktop && !mobile) {
+    if (!featured) {
       return `<div class="state-message">No preview available</div>`;
     }
 
-    const bgTag = background
-      ? `<div class="preview-bg">${this._mediaTag(background, item.name, false)}</div>`
-      : "";
-
-    const desktopTag = desktop
-      ? `<div class="preview-desktop">${this._mediaTag(desktop, item.name + " — desktop")}</div>`
-      : "";
-
-    const mobileTag = mobile
-      ? `<div class="preview-mobile">${this._mediaTag(mobile, item.name + " — mobile")}</div>`
-      : "";
-
-    return bgTag + desktopTag + mobileTag;
+    return `<div class="preview-desktop">${this._mediaTag(featured, item.name)}</div>`;
   }
 
   _mediaTag(src, altLabel, autoplay = true) {

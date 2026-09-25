@@ -16,7 +16,6 @@ PP_TEMPLATE.innerHTML = `
     --pp-meta-width: 240px;
     --pp-item-name-size: 20px;
     --pp-item-name-size-active: 26px;
-    --pp-gallery-max-width: 100%;
 
     position: relative;
     display: block;
@@ -29,14 +28,53 @@ PP_TEMPLATE.innerHTML = `
 
   * { box-sizing: border-box; }
 
+  /* ---- Fixed full-viewport backdrop, behind everything ---- */
+  .backdrop-layer {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.6s ease, background-image 0.6s ease;
+    pointer-events: none;
+  }
+
+  .backdrop-layer.visible {
+    opacity: 1;
+  }
+
+  .backdrop-tint {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: var(--pp-tint-color, rgba(10, 10, 10, 0.7));
+    transition: background 0.6s ease;
+    pointer-events: none;
+  }
+
+  .page-title-block {
+    text-align: right;
+    margin-bottom: 28px;
+  }
+
   .page-title {
     font-family: var(--pp-font-heading);
     font-weight: 700;
-    font-size: clamp(40px, 6vw, 72px);
+    font-size: clamp(32px, 5vw, 56px);
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    margin: 0;
+    transition: color 0.4s ease;
+  }
+
+  .page-subtitle {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
     letter-spacing: var(--pp-label-tracking);
     text-transform: uppercase;
-    text-align: right;
-    margin: 0 0 40px;
+    color: var(--pp-muted);
   }
 
   .layout {
@@ -108,32 +146,6 @@ PP_TEMPLATE.innerHTML = `
     min-width: 0;
   }
 
-  .detail-header {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 4px;
-    margin-bottom: 18px;
-    text-align: right;
-  }
-
-  .detail-name {
-    font-family: var(--pp-font-heading);
-    font-weight: 700;
-    font-size: clamp(24px, 3vw, 34px);
-    letter-spacing: 0.01em;
-    text-transform: uppercase;
-    margin: 0;
-  }
-
-  .detail-type {
-    font-size: 11px;
-    letter-spacing: var(--pp-label-tracking);
-    text-transform: uppercase;
-    color: var(--pp-muted);
-    white-space: nowrap;
-  }
-
   .preview-row {
     display: flex;
     gap: 40px;
@@ -150,8 +162,9 @@ PP_TEMPLATE.innerHTML = `
     width: 100%;
     aspect-ratio: 16 / 10;
     background: var(--pp-panel);
-    border: 1px solid var(--pp-border);
+    border: 1px solid var(--pp-gallery-border, var(--pp-border));
     overflow: hidden;
+    transition: border-color 0.4s ease;
   }
 
   .gallery-image {
@@ -217,11 +230,15 @@ PP_TEMPLATE.innerHTML = `
     cursor: pointer;
     overflow: hidden;
     opacity: 0.55;
-    transition: opacity 0.15s ease;
+    transition: opacity 0.15s ease, border-color 0.4s ease;
   }
 
   .thumbnail img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .thumbnail.active { opacity: 1; }
+
+  .thumbnail.active {
+    opacity: 1;
+    border-color: var(--pp-accent);
+  }
 
   .meta-col {
     flex: 0 0 var(--pp-meta-width);
@@ -239,6 +256,7 @@ PP_TEMPLATE.innerHTML = `
     text-transform: uppercase;
     color: var(--pp-accent);
     font-weight: 700;
+    transition: color 0.4s ease;
   }
 
   .meta-block p {
@@ -266,34 +284,101 @@ PP_TEMPLATE.innerHTML = `
     white-space: nowrap;
   }
 
+  /* ---- Markdown-rendered content block ---- */
   .description-block {
     margin-top: 32px;
+    max-width: 760px;
     font-size: 14px;
     line-height: 1.8;
     color: #cfcfcf;
-    max-width: 760px;
+  }
+
+  .description-block h1,
+  .description-block h2,
+  .description-block h3,
+  .description-block h4 {
+    font-family: var(--pp-font-heading);
+    color: var(--pp-fg);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin: 1.4em 0 0.5em;
+  }
+
+  .description-block h1:first-child,
+  .description-block h2:first-child,
+  .description-block h3:first-child {
+    margin-top: 0;
+  }
+
+  .description-block h1 { font-size: 22px; }
+  .description-block h2 { font-size: 18px; }
+  .description-block h3 { font-size: 15px; }
+
+  .description-block p {
+    margin: 0 0 1em;
+  }
+
+  .description-block ul,
+  .description-block ol {
+    margin: 0 0 1em;
+    padding-left: 1.4em;
+  }
+
+  .description-block li {
+    margin-bottom: 0.4em;
+  }
+
+  .description-block a {
+    color: var(--pp-accent);
+    text-decoration: underline;
+  }
+
+  .description-block strong {
+    color: var(--pp-fg);
+  }
+
+  .description-block code {
+    font-family: var(--af-font-mono, 'IBM Plex Mono', monospace);
+    background: var(--pp-panel);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+
+  .description-block blockquote {
+    margin: 0 0 1em;
+    padding-left: 14px;
+    border-left: 2px solid var(--pp-border);
+    color: var(--pp-muted);
+  }
+
+  .description-block hr {
+    border: none;
+    border-top: 1px solid var(--pp-border);
+    margin: 1.5em 0;
   }
 
   @media (max-width: 860px) {
     .layout { flex-direction: column; }
     .list-col { max-height: none; flex-basis: auto; width: 100%; }
     .preview-row { flex-direction: column; }
-    .detail-header { align-items: flex-start; text-align: left; }
+    .page-title-block { text-align: left; }
   }
 </style>
 
-<h1 class="page-title" part="page-title"></h1>
+<div class="backdrop-layer" part="backdrop"></div>
+<div class="backdrop-tint" part="backdrop-tint"></div>
+
+<div class="page-title-block">
+  <h1 class="page-title" part="page-title"></h1>
+  <span class="page-subtitle" part="page-subtitle"></span>
+</div>
 <div class="layout">
   <div class="list-col">
     <ul class="item-list"></ul>
   </div>
 
   <div class="detail-col">
-    <div class="detail-header">
-      <h2 class="detail-name"></h2>
-      <span class="detail-type"></span>
-    </div>
-
     <div class="preview-row">
       <div class="gallery-wrap">
         <div class="gallery">
@@ -322,7 +407,7 @@ PP_TEMPLATE.innerHTML = `
       </div>
     </div>
 
-    <p class="description-block"></p>
+    <div class="description-block"></div>
   </div>
 </div>
 `;
@@ -355,6 +440,7 @@ class PortfolioPage extends HTMLElement {
 
   _render() {
     this.shadowRoot.querySelector(".page-title").textContent = this.pageTitleText;
+    this.shadowRoot.querySelector(".page-subtitle").textContent = "";
   }
 
   async _loadData() {
@@ -420,15 +506,67 @@ class PortfolioPage extends HTMLElement {
       li.classList.toggle("active", Number(li.dataset.index) === this._index);
     });
 
-    root.querySelector(".detail-name").textContent = item.name || "";
-    root.querySelector(".detail-type").textContent = item.type || "";
-    root.querySelector(".description-block").textContent = item.description || "";
+    root.querySelector(".page-title").textContent = item.name || "";
+    root.querySelector(".page-subtitle").textContent = item.type || "";
     root.querySelector(".meta-role").textContent = item.role || "";
     root.querySelector(".meta-stack").innerHTML = this._buildPills(item.stack);
     root.querySelector(".meta-implementations").innerHTML = this._buildPills(item.implementations);
 
+    this._renderMarkdown(item);
+
+    const accent = item.color && /^#[0-9a-f]{3,8}$/i.test(item.color) ? item.color : "";
+    this.style.setProperty("--pp-accent", accent || "#ffffff");
+    this.style.setProperty("--pp-gallery-border", accent || "");
+    root.querySelector(".page-title").style.color = accent || "";
+
+    this._setTint(item.tintColor);
+    this._setBackdrop(item.preview && item.preview.backdrop);
+
     this._renderThumbnails();
     this._renderGalleryImage();
+  }
+
+  _renderMarkdown(item) {
+    const el = this.shadowRoot.querySelector(".description-block");
+    const source = item.content || item.description || "";
+
+    if (!source) {
+      el.innerHTML = "";
+      return;
+    }
+
+    if (window.marked && typeof window.marked.parse === "function") {
+      el.innerHTML = window.marked.parse(source);
+    } else {
+      // Fallback if marked hasn't loaded yet: show as plain text rather than raw markdown syntax
+      el.textContent = source;
+    }
+  }
+
+  _setTint(tintColor) {
+    const isValidColor = tintColor && /^#[0-9a-f]{3,8}$/i.test(tintColor);
+    if (isValidColor) {
+      // Convert hex to rgba with a fixed readability-friendly alpha
+      const hex = tintColor.replace("#", "");
+      const full = hex.length === 3 ? hex.split("").map((c) => c + c).join("") : hex;
+      const r = parseInt(full.substring(0, 2), 16);
+      const g = parseInt(full.substring(2, 4), 16);
+      const b = parseInt(full.substring(4, 6), 16);
+      this.style.setProperty("--pp-tint-color", `rgba(${r}, ${g}, ${b}, 0.55)`);
+    } else {
+      this.style.setProperty("--pp-tint-color", "rgba(10, 10, 10, 0.7)");
+    }
+  }
+
+  _setBackdrop(url) {
+    const layer = this.shadowRoot.querySelector(".backdrop-layer");
+    if (!url) {
+      layer.classList.remove("visible");
+      return;
+    }
+    const safeUrl = window.TextHelper.escapeAttr(url);
+    layer.style.backgroundImage = `url("${safeUrl}")`;
+    layer.classList.add("visible");
   }
 
   _getGallery() {

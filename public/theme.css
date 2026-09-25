@@ -85,3 +85,9 @@ integrations-strip {
   --ix-font-heading: var(--font-heading);
   --ix-font-body: var(--font-nav);
 }
+
+/* ---- Stack strip theming ---- */
+  stack-strip {
+    --ss-font-heading: var(--font-heading);
+    --ss-font-body: var(--font-nav);
+  }

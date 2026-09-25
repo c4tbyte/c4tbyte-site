@@ -39,24 +39,24 @@ const CATEGORIES = [
 function getSlots(count) {
   if (count === 3) {
     return [
-      { x: 50, y: 28, w: 50, h: 38 },
-      { x: 27, y: 74, w: 38, h: 38 },
-      { x: 73, y: 74, w: 38, h: 38 },
+      { x: 50, y: 32, w: 30, h: 26 },
+      { x: 33, y: 70, w: 28, h: 28 },
+      { x: 67, y: 70, w: 28, h: 28 },
     ];
   }
   if (count === 4) {
     return [
-      { x: 27, y: 27, w: 38, h: 38 },
-      { x: 73, y: 27, w: 38, h: 38 },
-      { x: 27, y: 73, w: 38, h: 38 },
-      { x: 73, y: 73, w: 38, h: 38 },
+      { x: 33, y: 33, w: 28, h: 28 },
+      { x: 67, y: 33, w: 28, h: 28 },
+      { x: 33, y: 67, w: 28, h: 28 },
+      { x: 67, y: 67, w: 28, h: 28 },
     ];
   }
   return Array.from({ length: count }, (_, i) => ({
     x: ((i + 1) / (count + 1)) * 100,
     y: 50,
-    w: 80 / count,
-    h: 60,
+    w: 60 / count,
+    h: 45,
   }));
 }
 
@@ -254,7 +254,7 @@ class IntegrationsStrip extends HTMLElement {
           }
 
           if (i === hoveredIndex) {
-            el.style.transform = "translate(-50%, -50%) scale(1.3)";
+            el.style.transform = "translate(-50%, -50%) scale(1.2)";
             el.style.zIndex = "2";
             return;
           }
@@ -267,10 +267,10 @@ class IntegrationsStrip extends HTMLElement {
           dx /= dist;
           dy /= dist;
 
-          const pushX = dx * fieldRect.width * 0.11;
-          const pushY = dy * fieldRect.height * 0.11;
+          const pushX = dx * fieldRect.width * 0.05;
+          const pushY = dy * fieldRect.height * 0.05;
 
-          el.style.transform = `translate(calc(-50% + ${pushX}px), calc(-50% + ${pushY}px)) scale(0.8)`;
+          el.style.transform = `translate(calc(-50% + ${pushX}px), calc(-50% + ${pushY}px)) scale(0.85)`;
           el.style.zIndex = "1";
         });
       };

@@ -29,6 +29,7 @@ const CATEGORIES = [
   },
   {
     label: "Fan Engagement",
+    layout: "oneThree",
     bubbles: [
       { name: "YouTube", src: "/images/logos/youtube.png" },
       { name: "Discord", src: "/images/logos/discord.png" },

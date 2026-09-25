@@ -147,19 +147,8 @@ IX_TEMPLATE.innerHTML = `
     align-items: center;
     justify-content: center;
     transform: translate(-50%, -50%) scale(1);
-    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
     cursor: default;
-  }
-
-  .bubble.is-hovered {
-    transform: translate(-50%, -50%) scale(1.3);
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    z-index: 2;
-  }
-
-  .bubble.is-shrunk {
-    transform: translate(-50%, -50%) scale(0.72);
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .bubble img {
@@ -249,24 +238,62 @@ class IntegrationsStrip extends HTMLElement {
         return el;
       });
 
-      bubbleEls.forEach((el) => {
-        el.addEventListener("mouseenter", () => {
-          bubbleEls.forEach((other) => {
-            if (other === el) {
-              other.classList.add("is-hovered");
-              other.classList.remove("is-shrunk");
-            } else {
-              other.classList.add("is-shrunk");
-              other.classList.remove("is-hovered");
-            }
-          });
+      let lastHovered = null;
+
+      const applyHoverState = (hoveredIndex) => {
+        if (hoveredIndex === lastHovered) return;
+        lastHovered = hoveredIndex;
+
+        const fieldRect = fieldEl.getBoundingClientRect();
+
+        bubbleEls.forEach((el, i) => {
+          if (hoveredIndex === null) {
+            el.style.transform = "translate(-50%, -50%) scale(1)";
+            el.style.zIndex = "1";
+            return;
+          }
+
+          if (i === hoveredIndex) {
+            el.style.transform = "translate(-50%, -50%) scale(1.3)";
+            el.style.zIndex = "2";
+            return;
+          }
+
+          const hovered = slots[hoveredIndex];
+          const slot = slots[i];
+          let dx = slot.x - hovered.x;
+          let dy = slot.y - hovered.y;
+          const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+          dx /= dist;
+          dy /= dist;
+
+          const pushX = dx * fieldRect.width * 0.11;
+          const pushY = dy * fieldRect.height * 0.11;
+
+          el.style.transform = `translate(calc(-50% + ${pushX}px), calc(-50% + ${pushY}px)) scale(0.8)`;
+          el.style.zIndex = "1";
         });
-        el.addEventListener("mouseleave", () => {
-          bubbleEls.forEach((other) => {
-            other.classList.remove("is-hovered", "is-shrunk");
-          });
+      };
+
+      fieldEl.addEventListener("mousemove", (e) => {
+        const rect = fieldEl.getBoundingClientRect();
+        const mx = ((e.clientX - rect.left) / rect.width) * 100;
+        const my = ((e.clientY - rect.top) / rect.height) * 100;
+
+        let nearest = 0;
+        let nearestDist = Infinity;
+        slots.forEach((slot, i) => {
+          const d = (slot.x - mx) ** 2 + (slot.y - my) ** 2;
+          if (d < nearestDist) {
+            nearestDist = d;
+            nearest = i;
+          }
         });
+
+        applyHoverState(nearest);
       });
+
+      fieldEl.addEventListener("mouseleave", () => applyHoverState(null));
 
       const labelEl = document.createElement("div");
       labelEl.className = "category-label";

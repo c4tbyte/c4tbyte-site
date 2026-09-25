@@ -41,9 +41,9 @@ function getSlots(count, layout) {
   if (layout === "oneThree") {
     return [
       { x: 50, y: 26, w: 200, h: 46 },
-      { x: 25, y: 68, w: 76, h: 76 },
-      { x: 50, y: 68, w: 76, h: 76 },
-      { x: 75, y: 68, w: 76, h: 76 },
+      { x: 22, y: 68, w: 70, h: 70 },
+      { x: 50, y: 68, w: 70, h: 70 },
+      { x: 78, y: 68, w: 70, h: 70 },
     ];
   }
   if (count === 3) {

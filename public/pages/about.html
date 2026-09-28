@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C4TBYTE — About</title>
+  <link rel="stylesheet" href="/theme.css" />
+
+  <style>
+  .about-hero {
+    text-align: center;
+    padding: 60px 34px 40px;
+    border-bottom: 1px solid var(--border-color, #737373);
+  }
+
+  .about-heading {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: clamp(36px, 6vw, 64px);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin: 0 0 24px;
+  }
+
+  .about-logo {
+    height: 64px;
+    width: auto;
+    margin: 0 auto 32px;
+  }
+
+  .about-text {
+    font-family: var(--font-nav);
+    font-size: 18px;
+    line-height: 1.7;
+    color: #cfcfcf;
+    letter-spacing: 0.02em;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  </style>
+</head>
+<body>
+
+  <!-- Nav mount -->
+  <div data-site-nav></div>
+
+  <!-- Page content -->
+  <main>
+    <section class="about-hero">
+      <h1 class="about-heading">All About</h1>
+      <img class="about-logo" src="/images/nav-logo.png" alt="C4TBYTE" />
+      <p class="about-text">
+        C4TBYTE is a freelance web development and technical consulting studio
+        run by Iris — building custom sites, systems, and automation for the
+        music world and beyond. No templates, no cookie-cutter builds: just
+        code written specifically for whoever's paying for it.
+      </p>
+    </section>
+
+    <section class="about-fetch">
+      <about-fetch
+        ascii-src="/images/ascii/c4tbyte.txt"
+        founded-date="2026-06-01"
+        whoami="me@c4tbyte"
+        terminal-title="Terminal — About Me"
+      ></about-fetch>
+    </section>
+  </main>
+
+  <div data-site-footer></div>
+
+  <script src="/components/helpers/text-helper.js" defer></script>
+  <script src="/components/simple-footer.js" defer></script>
+  <script src="/components/helpers/footer-helper.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
+  <script src="/components/about-fetch.js" defer></script>
+  <script src="/components/simple-nav.js" defer></script>
+  <script src="/components/helpers/nav-helper.js" defer></script>
+
+</body>
+</html>

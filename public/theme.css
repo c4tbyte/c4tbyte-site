@@ -66,7 +66,7 @@ simple-nav {
   --nav-fg: var(--color-fg);
   --nav-font-family: var(--font-nav);
   --nav-font-weight: 400;
-  --nav-active-color: var(--color-accent);
+  --nav-active-color: #9a9a9a;
   --nav-border-color: var(--border-color);
 }
 

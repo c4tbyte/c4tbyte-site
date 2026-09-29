@@ -107,9 +107,9 @@
 
   .sidebar-links a {
     display: block;
-    padding: calc(10px * var(--sidebar-scale)) 0;
+    padding: calc(12px * var(--sidebar-scale)) 0;
     font-family: var(--font-nav);
-    font-size: calc(18px * var(--sidebar-scale));
+    font-size: calc(22px * var(--sidebar-scale));
     letter-spacing: 0.03em;
     text-transform: uppercase;
     color: #9a9a9a;
@@ -128,14 +128,16 @@
     min-width: 0;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
+    gap: 20px;
+    justify-content: center;
   }
 
   .service-card {
     position: relative;
     aspect-ratio: 1 / 1;
-    max-width: 220px;
-    max-height: 220px;
+    max-width: 320px;
+    max-height: 320px;
+    width: 100%;
     border: 1px solid var(--border-color, #737373);
     background: #131313;
     overflow: hidden;
@@ -157,7 +159,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 18px;
+    padding: 26px;
     text-align: center;
     opacity: 1;
     transition: opacity 0.25s ease;
@@ -169,25 +171,25 @@
   }
 
   .card-face .service-card-icon {
-    width: 34px;
-    height: 34px;
+    width: 48px;
+    height: 48px;
     border: 1.5px solid var(--border-color, #737373);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 12px;
+    margin-bottom: 18px;
     color: #ffffff;
   }
 
   .card-face .service-card-icon svg {
-    width: 16px;
-    height: 16px;
+    width: 22px;
+    height: 22px;
   }
 
   .card-face h2 {
     font-family: var(--font-heading);
-    font-size: 16px;
+    font-size: 22px;
     letter-spacing: 0.01em;
     text-transform: uppercase;
     margin: 0;
@@ -199,7 +201,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 18px;
+    padding: 26px;
     color: #0a0a0a;
     opacity: 0;
     pointer-events: none;
@@ -213,17 +215,17 @@
 
   .card-details p {
     font-family: var(--font-nav);
-    font-size: 12px;
-    line-height: 1.5;
-    margin: 0 0 12px;
+    font-size: 14px;
+    line-height: 1.55;
+    margin: 0 0 16px;
   }
 
   .card-details .price-hint {
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: 0.03em;
     text-transform: uppercase;
     color: #2f7a2f;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
   }
 
   .read-more {
@@ -387,12 +389,11 @@
 
       sidebar.style.height = `${targetHeight}px`;
 
-      // Reset to full scale, then measure natural content height
       sidebar.style.setProperty("--sidebar-scale", "1");
       const naturalHeight = sidebar.scrollHeight;
 
       if (naturalHeight > targetHeight) {
-        const scale = Math.max(targetHeight / naturalHeight, 0.55);
+        const scale = Math.max(targetHeight / naturalHeight, 0.75);
         sidebar.style.setProperty("--sidebar-scale", scale.toFixed(3));
       }
     }

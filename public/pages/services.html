@@ -164,38 +164,6 @@
     pointer-events: none;
   }
 
-  .service-card::before,
-  .service-card::after,
-  .service-card .corner-tl,
-  .service-card .corner-br {
-    content: "";
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    border-color: var(--border-color, #737373);
-    opacity: 0.6;
-    transition: opacity 0.25s ease;
-  }
-
-  .service-card::before {
-    top: 8px;
-    left: 8px;
-    border-top: 1.5px solid;
-    border-left: 1.5px solid;
-  }
-
-  .service-card::after {
-    bottom: 8px;
-    right: 8px;
-    border-bottom: 1.5px solid;
-    border-right: 1.5px solid;
-  }
-
-  .service-card:hover::before,
-  .service-card:hover::after {
-    opacity: 0;
-  }
-
   .card-tagline {
     font-family: var(--font-nav);
     font-size: 12px;
@@ -204,25 +172,31 @@
     margin-top: 8px;
   }
 
-  .hover-hint {
+  .card-price-preview {
     position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 10px;
-    letter-spacing: 0.15em;
+    bottom: 24px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: var(--font-nav);
+    font-size: 11px;
+    letter-spacing: 0.03em;
     text-transform: uppercase;
-    color: #555555;
-    animation: hint-bob 2s ease-in-out infinite;
+    color: #6fdc4d;
+    transition: opacity 0.25s ease;
   }
 
-  @keyframes hint-bob {
-    0%, 100% { transform: translate(-50%, 0); opacity: 0.5; }
-    50% { transform: translate(-50%, 4px); opacity: 1; }
-  }
-
-  .service-card:hover .hover-hint {
+  .service-card:hover .card-price-preview {
     opacity: 0;
+  }
+
+  .grid-hint {
+    text-align: center;
+    font-family: var(--font-nav);
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    color: #6b6b6b;
+    padding: 0 34px 40px;
   }
 
   .card-face .service-card-icon {
@@ -378,7 +352,7 @@
             <h2>Web Design &amp; Development</h2>
             <p class="card-tagline">No templates. No compromises.</p>
           </div>
-          <div class="hover-hint">Hover ↓</div>
+          <p class="card-price-preview">Starting at $500 (scene &amp; nonprofit)</p>
           <div class="card-details">
             <p>Fully hand-coded, custom sites — no templates, no page builders. Built specifically for you, from scratch.</p>
             <p class="price-hint">Starting at $500 (scene &amp; nonprofit)</p>
@@ -394,7 +368,7 @@
             <h2>Digital Systems &amp; Automation</h2>
             <p class="card-tagline">Your platforms, finally talking to each other.</p>
           </div>
-          <div class="hover-hint">Hover ↓</div>
+          <p class="card-price-preview">Starting at $200 (scene &amp; nonprofit)</p>
           <div class="card-details">
             <p>Content dashboards, integrations, and automation — including Backline, my own client management tool.</p>
             <p class="price-hint">Starting at $200 (scene &amp; nonprofit)</p>
@@ -410,7 +384,7 @@
             <h2>Design Only</h2>
             <p class="card-tagline">Concept first, code later.</p>
           </div>
-          <div class="hover-hint">Hover ↓</div>
+          <p class="card-price-preview">Starting at $100 (scene &amp; nonprofit)</p>
           <div class="card-details">
             <p>Visual concepts and mockups, no development attached — for clients with their own developer, or who want direction locked in first.</p>
             <p class="price-hint">Starting at $100 (scene &amp; nonprofit)</p>
@@ -426,7 +400,7 @@
             <h2>Quick Tasks</h2>
             <p class="card-tagline">Small fixes, fast turnaround.</p>
           </div>
-          <div class="hover-hint">Hover ↓</div>
+          <p class="card-price-preview">Starting at $30 (scene &amp; nonprofit)</p>
           <div class="card-details">
             <p>Small fixes, single features, one-off requests — for things too small to be their own project.</p>
             <p class="price-hint">Starting at $30 (scene &amp; nonprofit)</p>
@@ -435,6 +409,8 @@
         </a>
       </div>
     </section>
+
+    <p class="grid-hint">Hover on cards for more details.</p>
     </div>
   </main>
 
@@ -460,6 +436,7 @@
 
       const sidebarHeight = sidebar.scrollHeight;
 
+      // Loose sanity cap so height can't run away on an unusually tall sidebar
       const maxReasonableHeight = window.innerHeight * 0.7;
 
       const cardSize = Math.min(sidebarHeight, maxReasonableHeight);

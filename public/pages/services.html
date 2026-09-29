@@ -258,6 +258,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    text-align: center;
     padding: 32px;
     color: #0a0a0a;
     opacity: 0;
@@ -366,12 +368,12 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
             </div>
             <h2>Web Design &amp; Development</h2>
-            <p class="card-tagline">No templates. No compromises.</p>
+            <p class="card-tagline">Fully custom sites, no page builders.</p>
           </div>
-          <p class="card-price-preview"><span class="price-amount">Starting at $500</span><span class="price-tier-label">(Scene &amp; Nonprofit)</span></p>
+          <p class="card-price-preview"><span class="price-amount">Starting at $400</span><span class="price-tier-label">(Scene &amp; Nonprofit)</span></p>
           <div class="card-details">
-            <p>Fully hand-coded, custom sites — no templates, no page builders. Built specifically for you, from scratch.</p>
-            <p class="price-hint">Starting at $500 (scene &amp; nonprofit)</p>
+            <p>From moodboard to mockup to launch, every step is built around your vision. Includes responsive design, basic SEO, and deployment — ready to go live.</p>
+            <p class="price-hint">Starting at $400 (scene &amp; nonprofit)</p>
             <span class="read-more">Read More →</span>
           </div>
         </a>
@@ -382,12 +384,12 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
             </div>
             <h2>Digital Systems &amp; Automation</h2>
-            <p class="card-tagline">Your platforms, finally talking to each other.</p>
+            <p class="card-tagline">Making your digital presence as easy as possible.</p>
           </div>
-          <p class="card-price-preview"><span class="price-amount">Starting at $200</span><span class="price-tier-label">(Scene &amp; Nonprofit)</span></p>
+          <p class="card-price-preview"><span class="price-amount">Starting at $100</span><span class="price-tier-label">(Scene &amp; Nonprofit)</span></p>
           <div class="card-details">
-            <p>Content dashboards, integrations, and automation — including Backline, my own client management tool.</p>
-            <p class="price-hint">Starting at $200 (scene &amp; nonprofit)</p>
+            <p>Powered by Backline, my own client dashboard — swap photos, update text, and adjust embeds without touching code. Includes automated syncing, integrations with the platforms you already use, and built-in safeguards so a temporary outage never takes your site down.</p>
+            <p class="price-hint">Starting at $100 (scene &amp; nonprofit)</p>
             <span class="read-more">Read More →</span>
           </div>
         </a>
@@ -398,11 +400,11 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
             </div>
             <h2>Design Only</h2>
-            <p class="card-tagline">Concept first, code later.</p>
+            <p class="card-tagline">All the vibes, none of the code.</p>
           </div>
           <p class="card-price-preview"><span class="price-amount">Starting at $100</span><span class="price-tier-label">(Scene &amp; Nonprofit)</span></p>
           <div class="card-details">
-            <p>Visual concepts and mockups, no development attached — for clients with their own developer, or who want direction locked in first.</p>
+            <p>A full mockup, feedback rounds, and a defined look — colors, type, layout, etc. Bring your own developer, or come back to me once you're ready.</p>
             <p class="price-hint">Starting at $100 (scene &amp; nonprofit)</p>
             <span class="read-more">Read More →</span>
           </div>
@@ -414,11 +416,11 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
             </div>
             <h2>Quick Tasks</h2>
-            <p class="card-tagline">Small fixes, fast turnaround.</p>
+            <p class="card-tagline">For the small stuff.</p>
           </div>
           <p class="card-price-preview"><span class="price-amount">Starting at $30</span><span class="price-tier-label">(Scene &amp; Nonprofit)</span></p>
           <div class="card-details">
-            <p>Small fixes, single features, one-off requests — for things too small to be their own project.</p>
+            <p>Something's broken, or you need one small thing added — not a whole redesign. I'll finish it up fast with no complications.</p>
             <p class="price-hint">Starting at $30 (scene &amp; nonprofit)</p>
             <span class="read-more">Read More →</span>
           </div>
@@ -444,7 +446,6 @@
       const sidebar = document.querySelector(".services-sidebar");
       if (!grid || !sidebar) return;
 
-      // On mobile, sidebar and grid stack vertically — no matching needed
       if (window.innerWidth <= 860) {
         grid.style.setProperty("--card-size", "320px");
         return;

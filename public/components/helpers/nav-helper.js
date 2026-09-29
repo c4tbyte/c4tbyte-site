@@ -6,8 +6,8 @@ function renderSiteNav() {
       logo-href="/"
       links="
         Work|/work,
-        About|/about,
         Services|/services,
+        About|/about,
         Contact|/contact,
         BackAlley|/backalley
       "

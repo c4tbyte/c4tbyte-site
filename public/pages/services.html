@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C4TBYTE — Services</title>
+  <link rel="stylesheet" href="/theme.css" />
+
+  <style>
+  .services-header {
+    text-align: center;
+    padding: 60px 34px 40px;
+    border-bottom: 1px solid var(--border-color, #737373);
+  }
+
+  .services-heading {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: clamp(36px, 6vw, 64px);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin: 0 0 16px;
+  }
+
+  .services-subtext {
+    font-family: var(--font-nav);
+    font-size: 18px;
+    line-height: 1.6;
+    color: #cfcfcf;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .services-layout {
+    display: flex;
+    gap: 48px;
+    padding: 48px 34px;
+    align-items: flex-start;
+  }
+
+  .services-sidebar {
+    flex: 0 0 220px;
+    min-width: 0;
+  }
+
+  .sidebar-group {
+    margin-bottom: 28px;
+  }
+
+  .sidebar-label {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6b6b6b;
+    margin: 0 0 10px;
+  }
+
+  .sidebar-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sidebar-links li {
+    border-bottom: 1px solid var(--border-color, #737373);
+  }
+
+  .sidebar-links li:first-child {
+    border-top: 1px solid var(--border-color, #737373);
+  }
+
+  .sidebar-links a {
+    display: block;
+    padding: 10px 0;
+    font-family: var(--font-nav);
+    font-size: 14px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: #9a9a9a;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .sidebar-links a:hover {
+    color: #ffffff;
+  }
+
+  .services-grid {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .service-card {
+    border: 1px solid var(--border-color, #737373);
+    background: #131313;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .service-card-icon {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border-color, #737373);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 18px;
+  }
+
+  .service-card h2 {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+  }
+
+  .service-card p {
+    font-family: var(--font-nav);
+    font-size: 14px;
+    line-height: 1.6;
+    color: #b5b5b5;
+    margin: 0 0 20px;
+    flex: 1;
+  }
+
+  .service-card .price-hint {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #6fdc4d;
+    margin-bottom: 16px;
+  }
+
+  .read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-nav);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-decoration: none;
+    align-self: flex-start;
+  }
+
+  .read-more:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 860px) {
+    .services-layout {
+      flex-direction: column;
+    }
+    .services-sidebar {
+      flex-basis: auto;
+      width: 100%;
+    }
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  </style>
+</head>
+<body>
+
+  <!-- Nav mount -->
+  <div data-site-nav></div>
+
+  <!-- Page content -->
+  <main>
+    <section class="services-header">
+      <h1 class="services-heading">Services</h1>
+      <p class="services-subtext">
+        Custom web development, digital systems, and design work — priced
+        fairly for the DIY scene, and built the same way regardless of budget.
+      </p>
+    </section>
+
+    <section class="services-layout">
+      <aside class="services-sidebar">
+        <div class="sidebar-group">
+          <p class="sidebar-label">Services</p>
+          <ul class="sidebar-links">
+            <li><a href="/services/website">Web Design &amp; Development</a></li>
+            <li><a href="/services/automation">Digital Systems &amp; Automation</a></li>
+            <li><a href="/services/design">Design Only</a></li>
+            <li><a href="/services/quick-tasks">Quick Tasks</a></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-group">
+          <p class="sidebar-label">Resources</p>
+          <ul class="sidebar-links">
+            <li><a href="/services/pricing">Full Price List</a></li>
+            <li><a href="/services/quote">Get a Quote</a></li>
+            <li><a href="/services/faq">FAQ</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-card-icon">01</div>
+          <h2>Web Design &amp; Development</h2>
+          <p>Fully hand-coded, custom sites — no templates, no page builders. Built specifically for you, from scratch.</p>
+          <p class="price-hint">Starting at $500 (scene &amp; nonprofit)</p>
+          <a class="read-more" href="/services/website">Read More →</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon">02</div>
+          <h2>Digital Systems &amp; Automation</h2>
+          <p>Content dashboards, integrations, and automation — including Backline, my own client management tool.</p>
+          <p class="price-hint">Starting at $200 (scene &amp; nonprofit)</p>
+          <a class="read-more" href="/services/automation">Read More →</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon">03</div>
+          <h2>Design Only</h2>
+          <p>Visual concepts and mockups, no development attached — for clients with their own developer, or who want direction locked in first.</p>
+          <p class="price-hint">Starting at $100 (scene &amp; nonprofit)</p>
+          <a class="read-more" href="/services/design">Read More →</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon">04</div>
+          <h2>Quick Tasks</h2>
+          <p>Small fixes, single features, one-off requests — for things too small to be their own project.</p>
+          <p class="price-hint">Starting at $30 (scene &amp; nonprofit)</p>
+          <a class="read-more" href="/services/quick-tasks">Read More →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-site-footer></div>
+
+  <script src="/components/helpers/text-helper.js" defer></script>
+  <script src="/components/simple-footer.js" defer></script>
+  <script src="/components/helpers/footer-helper.js" defer></script>
+  <script src="/components/simple-nav.js" defer></script>
+  <script src="/components/helpers/nav-helper.js" defer></script>
+
+</body>
+</html>

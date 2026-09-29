@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C4TBYTE — Get a Quote</title>
+  <link rel="stylesheet" href="/theme.css" />
+
+  <style>
+  .quote-header {
+    text-align: center;
+    padding: 60px 34px 40px;
+  }
+
+  .quote-heading {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: clamp(32px, 5vw, 52px);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin: 0 0 16px;
+  }
+
+  .quote-subtext {
+    font-family: var(--font-nav);
+    font-size: 16px;
+    line-height: 1.6;
+    color: #cfcfcf;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .quote-wrap {
+    padding: 0 34px 80px;
+  }
+
+  pricing-quiz {
+    --pq-font-heading: var(--font-heading);
+    --pq-font-body: var(--font-nav);
+  }
+  </style>
+</head>
+<body>
+
+  <div data-site-nav></div>
+
+  <main>
+    <section class="quote-header">
+      <h1 class="quote-heading">Get a Ballpark</h1>
+      <p class="quote-subtext">
+        This isn't a final quote — it's a rough estimate so you have a
+        starting number before we talk. Every real project gets scoped
+        properly before anything's final.
+      </p>
+    </section>
+
+    <section class="quote-wrap">
+      <pricing-quiz contact-url="/contact"></pricing-quiz>
+    </section>
+  </main>
+
+  <div data-site-footer></div>
+
+  <script src="/components/helpers/text-helper.js" defer></script>
+  <script src="/components/simple-footer.js" defer></script>
+  <script src="/components/helpers/footer-helper.js" defer></script>
+  <script src="/components/pricing-quiz.js" defer></script>
+  <script src="/components/simple-nav.js" defer></script>
+  <script src="/components/helpers/nav-helper.js" defer></script>
+
+</body>
+</html>

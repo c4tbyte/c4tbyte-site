@@ -130,9 +130,7 @@
 
   .service-card {
     position: relative;
-    aspect-ratio: 1 / 1;
-    max-width: var(--card-size);
-    max-height: var(--card-size);
+    height: var(--card-size);
     width: 100%;
     border: 1px solid var(--border-color, #737373);
     background: #131313;
@@ -381,12 +379,10 @@
 
       const sidebarHeight = sidebar.scrollHeight;
 
-      // Cards can't be wider than the available grid width allows (4 across, 3 gaps)
-      const gap = 20;
-      const gridWidth = grid.getBoundingClientRect().width;
-      const maxWidthPerCard = (gridWidth - gap * 3) / 4;
+      // Loose sanity cap so height can't run away on an unusually tall sidebar
+      const maxReasonableHeight = window.innerHeight * 0.7;
 
-      const cardSize = Math.min(sidebarHeight, maxWidthPerCard);
+      const cardSize = Math.min(sidebarHeight, maxReasonableHeight);
       grid.style.setProperty("--card-size", `${Math.max(cardSize, 120)}px`);
     }
 

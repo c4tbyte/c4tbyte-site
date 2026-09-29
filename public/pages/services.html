@@ -7,34 +7,64 @@
   <link rel="stylesheet" href="/theme.css" />
 
   <style>
+  html, body {
+    overflow-x: clip;
+  }
+
+  .services-wrap {
+    position: relative;
+  }
+
+  .services-wrap::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 500px;
+    height: calc(100% + 200px);
+    background-image: url("/images/hero-binary.png");
+    background-repeat: repeat-y;
+    background-position: left top;
+    background-size: 500px auto;
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .services-header,
+  .services-layout {
+    position: relative;
+    z-index: 1;
+  }
+
   .services-header {
     text-align: center;
-    padding: 60px 34px 40px;
+    padding: 32px 34px 24px;
     border-bottom: 1px solid var(--border-color, #737373);
   }
 
   .services-heading {
     font-family: var(--font-heading);
     font-weight: 900;
-    font-size: clamp(36px, 6vw, 64px);
+    font-size: clamp(28px, 4vw, 44px);
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    margin: 0 0 16px;
+    margin: 0 0 10px;
   }
 
   .services-subtext {
     font-family: var(--font-nav);
-    font-size: 18px;
-    line-height: 1.6;
+    font-size: 15px;
+    line-height: 1.5;
     color: #cfcfcf;
-    max-width: 600px;
+    max-width: 560px;
     margin: 0 auto;
   }
 
   .services-layout {
     display: flex;
-    gap: 48px;
-    padding: 48px 34px;
+    gap: 40px;
+    padding: 28px 34px;
     align-items: flex-start;
   }
 
@@ -74,16 +104,19 @@
     display: block;
     padding: 10px 0;
     font-family: var(--font-nav);
-    font-size: 14px;
+    font-size: 18px;
     letter-spacing: 0.03em;
     text-transform: uppercase;
     color: #9a9a9a;
     text-decoration: none;
-    transition: color 0.15s ease;
+    text-shadow: 0.3px 0 0 currentColor, -0.3px 0 0 currentColor;
+    transition: color 0.15s ease, font-size 0.15s ease, padding-left 0.15s ease;
   }
 
   .sidebar-links a:hover {
     color: #ffffff;
+    font-size: 20px;
+    padding-left: 4px;
   }
 
   .services-grid {
@@ -95,50 +128,69 @@
   }
 
   .service-card {
+    position: relative;
+    aspect-ratio: 1 / 1;
     border: 1px solid var(--border-color, #737373);
     background: #131313;
-    padding: 28px;
+    padding: 18px;
     display: flex;
     flex-direction: column;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--card-accent, #ffffff);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
   }
 
   .service-card-icon {
-    width: 40px;
-    height: 40px;
-    border: 1px solid var(--border-color, #737373);
+    width: 34px;
+    height: 34px;
+    border: 1.5px solid var(--border-color, #737373);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 16px;
-    margin-bottom: 18px;
+    margin-bottom: 12px;
+    color: var(--card-accent, #ffffff);
+    transition: background 0.25s ease, border-color 0.25s ease;
+  }
+
+  .service-card:hover .service-card-icon {
+    background: var(--card-accent, #ffffff);
+    border-color: var(--card-accent, #ffffff);
+    color: #0a0a0a;
+  }
+
+  .service-card-icon svg {
+    width: 16px;
+    height: 16px;
   }
 
   .service-card h2 {
     font-family: var(--font-heading);
-    font-size: 20px;
+    font-size: 16px;
     letter-spacing: 0.01em;
     text-transform: uppercase;
-    margin: 0 0 10px;
+    margin: 0 0 8px;
   }
 
   .service-card p {
     font-family: var(--font-nav);
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 12px;
+    line-height: 1.5;
     color: #b5b5b5;
-    margin: 0 0 20px;
+    margin: 0 0 12px;
     flex: 1;
   }
 
   .service-card .price-hint {
-    font-size: 12px;
-    letter-spacing: 0.04em;
+    font-size: 11px;
+    letter-spacing: 0.03em;
     text-transform: uppercase;
     color: #6fdc4d;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
   }
 
   .read-more {
@@ -179,6 +231,7 @@
 
   <!-- Page content -->
   <main>
+    <div class="services-wrap">
     <section class="services-header">
       <h1 class="services-heading">Services</h1>
       <p class="services-subtext">
@@ -211,7 +264,9 @@
 
       <div class="services-grid">
         <div class="service-card">
-          <div class="service-card-icon">01</div>
+          <div class="service-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          </div>
           <h2>Web Design &amp; Development</h2>
           <p>Fully hand-coded, custom sites — no templates, no page builders. Built specifically for you, from scratch.</p>
           <p class="price-hint">Starting at $500 (scene &amp; nonprofit)</p>
@@ -219,7 +274,9 @@
         </div>
 
         <div class="service-card">
-          <div class="service-card-icon">02</div>
+          <div class="service-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+          </div>
           <h2>Digital Systems &amp; Automation</h2>
           <p>Content dashboards, integrations, and automation — including Backline, my own client management tool.</p>
           <p class="price-hint">Starting at $200 (scene &amp; nonprofit)</p>
@@ -227,7 +284,9 @@
         </div>
 
         <div class="service-card">
-          <div class="service-card-icon">03</div>
+          <div class="service-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+          </div>
           <h2>Design Only</h2>
           <p>Visual concepts and mockups, no development attached — for clients with their own developer, or who want direction locked in first.</p>
           <p class="price-hint">Starting at $100 (scene &amp; nonprofit)</p>
@@ -235,7 +294,9 @@
         </div>
 
         <div class="service-card">
-          <div class="service-card-icon">04</div>
+          <div class="service-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          </div>
           <h2>Quick Tasks</h2>
           <p>Small fixes, single features, one-off requests — for things too small to be their own project.</p>
           <p class="price-hint">Starting at $30 (scene &amp; nonprofit)</p>
@@ -243,6 +304,7 @@
         </div>
       </div>
     </section>
+    </div>
   </main>
 
   <div data-site-footer></div>

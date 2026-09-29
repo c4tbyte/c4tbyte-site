@@ -123,13 +123,15 @@
     flex: 1 1 auto;
     min-width: 0;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
   }
 
   .service-card {
     position: relative;
     aspect-ratio: 1 / 1;
+    max-width: 220px;
+    max-height: 220px;
     border: 1px solid var(--border-color, #737373);
     background: #131313;
     padding: 18px;
@@ -219,7 +221,11 @@
       width: 100%;
     }
     .services-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .service-card {
+      max-width: none;
+      max-height: none;
     }
   }
   </style>

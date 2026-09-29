@@ -71,24 +71,19 @@
   .services-sidebar {
     flex: 0 0 220px;
     min-width: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: hidden;
-    --sidebar-scale: 1;
   }
 
   .sidebar-group {
-    margin-bottom: calc(28px * var(--sidebar-scale));
+    margin-bottom: 28px;
   }
 
   .sidebar-label {
     font-family: var(--font-heading);
-    font-size: calc(11px * var(--sidebar-scale));
+    font-size: 11px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: #6b6b6b;
-    margin: 0 0 calc(10px * var(--sidebar-scale));
+    margin: 0 0 10px;
   }
 
   .sidebar-links {
@@ -107,9 +102,9 @@
 
   .sidebar-links a {
     display: block;
-    padding: calc(12px * var(--sidebar-scale)) 0;
+    padding: 12px 0;
     font-family: var(--font-nav);
-    font-size: calc(22px * var(--sidebar-scale));
+    font-size: 22px;
     letter-spacing: 0.03em;
     text-transform: uppercase;
     color: #9a9a9a;
@@ -130,13 +125,14 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     justify-content: center;
+    --card-size: 320px;
   }
 
   .service-card {
     position: relative;
     aspect-ratio: 1 / 1;
-    max-width: 320px;
-    max-height: 320px;
+    max-width: var(--card-size);
+    max-height: var(--card-size);
     width: 100%;
     border: 1px solid var(--border-color, #737373);
     background: #131313;
@@ -159,7 +155,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 26px;
+    padding: calc(var(--card-size) * 0.08);
     text-align: center;
     opacity: 1;
     transition: opacity 0.25s ease;
@@ -171,25 +167,25 @@
   }
 
   .card-face .service-card-icon {
-    width: 48px;
-    height: 48px;
+    width: calc(var(--card-size) * 0.15);
+    height: calc(var(--card-size) * 0.15);
     border: 1.5px solid var(--border-color, #737373);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 18px;
+    margin-bottom: calc(var(--card-size) * 0.055);
     color: #ffffff;
   }
 
   .card-face .service-card-icon svg {
-    width: 22px;
-    height: 22px;
+    width: 45%;
+    height: 45%;
   }
 
   .card-face h2 {
     font-family: var(--font-heading);
-    font-size: 22px;
+    font-size: calc(var(--card-size) * 0.068);
     letter-spacing: 0.01em;
     text-transform: uppercase;
     margin: 0;
@@ -201,7 +197,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 26px;
+    padding: calc(var(--card-size) * 0.08);
     color: #0a0a0a;
     opacity: 0;
     pointer-events: none;
@@ -215,17 +211,17 @@
 
   .card-details p {
     font-family: var(--font-nav);
-    font-size: 14px;
+    font-size: calc(var(--card-size) * 0.044);
     line-height: 1.55;
-    margin: 0 0 16px;
+    margin: 0 0 calc(var(--card-size) * 0.05);
   }
 
   .card-details .price-hint {
-    font-size: 13px;
+    font-size: calc(var(--card-size) * 0.04);
     letter-spacing: 0.03em;
     text-transform: uppercase;
     color: #2f7a2f;
-    margin-bottom: 14px;
+    margin-bottom: calc(var(--card-size) * 0.045);
   }
 
   .read-more {
@@ -372,36 +368,32 @@
   <script src="/components/helpers/nav-helper.js" defer></script>
 
   <script>
-    function syncSidebarHeight() {
+    function syncCardSize() {
       const grid = document.querySelector(".services-grid");
       const sidebar = document.querySelector(".services-sidebar");
       if (!grid || !sidebar) return;
 
-      // Only sync on desktop widths, where sidebar and grid sit side by side
+      // On mobile, sidebar and grid stack vertically — no matching needed
       if (window.innerWidth <= 860) {
-        sidebar.style.height = "";
-        sidebar.style.setProperty("--sidebar-scale", "1");
+        grid.style.setProperty("--card-size", "320px");
         return;
       }
 
-      const targetHeight = grid.getBoundingClientRect().height;
-      if (!targetHeight) return;
+      const sidebarHeight = sidebar.scrollHeight;
 
-      sidebar.style.height = `${targetHeight}px`;
+      // Cards can't be wider than the available grid width allows (4 across, 3 gaps)
+      const gap = 20;
+      const gridWidth = grid.getBoundingClientRect().width;
+      const maxWidthPerCard = (gridWidth - gap * 3) / 4;
 
-      sidebar.style.setProperty("--sidebar-scale", "1");
-      const naturalHeight = sidebar.scrollHeight;
-
-      if (naturalHeight > targetHeight) {
-        const scale = Math.max(targetHeight / naturalHeight, 0.75);
-        sidebar.style.setProperty("--sidebar-scale", scale.toFixed(3));
-      }
+      const cardSize = Math.min(sidebarHeight, maxWidthPerCard);
+      grid.style.setProperty("--card-size", `${Math.max(cardSize, 120)}px`);
     }
 
-    window.addEventListener("load", syncSidebarHeight);
+    window.addEventListener("load", syncCardSize);
     window.addEventListener("resize", () => {
-      clearTimeout(window._sidebarSyncTimer);
-      window._sidebarSyncTimer = setTimeout(syncSidebarHeight, 100);
+      clearTimeout(window._cardSyncTimer);
+      window._cardSyncTimer = setTimeout(syncCardSize, 100);
     });
   </script>
 

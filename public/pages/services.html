@@ -71,19 +71,24 @@
   .services-sidebar {
     flex: 0 0 220px;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    --sidebar-scale: 1;
   }
 
   .sidebar-group {
-    margin-bottom: 28px;
+    margin-bottom: calc(28px * var(--sidebar-scale));
   }
 
   .sidebar-label {
     font-family: var(--font-heading);
-    font-size: 11px;
+    font-size: calc(11px * var(--sidebar-scale));
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: #6b6b6b;
-    margin: 0 0 10px;
+    margin: 0 0 calc(10px * var(--sidebar-scale));
   }
 
   .sidebar-links {
@@ -102,20 +107,19 @@
 
   .sidebar-links a {
     display: block;
-    padding: 10px 0;
+    padding: calc(10px * var(--sidebar-scale)) 0;
     font-family: var(--font-nav);
-    font-size: 18px;
+    font-size: calc(18px * var(--sidebar-scale));
     letter-spacing: 0.03em;
     text-transform: uppercase;
     color: #9a9a9a;
     text-decoration: none;
     text-shadow: 0.3px 0 0 currentColor, -0.3px 0 0 currentColor;
-    transition: color 0.15s ease, font-size 0.15s ease, padding-left 0.15s ease;
+    transition: color 0.15s ease, padding-left 0.15s ease;
   }
 
   .sidebar-links a:hover {
     color: #ffffff;
-    font-size: 20px;
     padding-left: 4px;
   }
 
@@ -134,19 +138,37 @@
     max-height: 220px;
     border: 1px solid var(--border-color, #737373);
     background: #131313;
-    padding: 18px;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s ease, background 0.3s ease, border-color 0.25s ease, box-shadow 0.25s ease;
   }
 
   .service-card:hover {
     transform: translateY(-4px);
-    border-color: var(--card-accent, #ffffff);
+    background: #e0e0e0;
+    border-color: #e0e0e0;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
   }
 
-  .service-card-icon {
+  .card-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 0.25s ease;
+  }
+
+  .service-card:hover .card-face {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .card-face .service-card-icon {
     width: 34px;
     height: 34px;
     border: 1.5px solid var(--border-color, #737373);
@@ -155,43 +177,52 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 12px;
-    color: var(--card-accent, #ffffff);
-    transition: background 0.25s ease, border-color 0.25s ease;
+    color: #ffffff;
   }
 
-  .service-card:hover .service-card-icon {
-    background: var(--card-accent, #ffffff);
-    border-color: var(--card-accent, #ffffff);
-    color: #0a0a0a;
-  }
-
-  .service-card-icon svg {
+  .card-face .service-card-icon svg {
     width: 16px;
     height: 16px;
   }
 
-  .service-card h2 {
+  .card-face h2 {
     font-family: var(--font-heading);
     font-size: 16px;
     letter-spacing: 0.01em;
     text-transform: uppercase;
-    margin: 0 0 8px;
+    margin: 0;
   }
 
-  .service-card p {
+  .card-details {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 18px;
+    color: #0a0a0a;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .service-card:hover .card-details {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .card-details p {
     font-family: var(--font-nav);
     font-size: 12px;
     line-height: 1.5;
-    color: #b5b5b5;
     margin: 0 0 12px;
-    flex: 1;
   }
 
-  .service-card .price-hint {
+  .card-details .price-hint {
     font-size: 11px;
     letter-spacing: 0.03em;
     text-transform: uppercase;
-    color: #6fdc4d;
+    color: #2f7a2f;
     margin-bottom: 10px;
   }
 
@@ -203,7 +234,8 @@
     font-size: 13px;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: #ffffff;
+    color: #0a0a0a;
+    font-weight: 700;
     text-decoration: none;
     align-self: flex-start;
   }
@@ -269,45 +301,61 @@
       </aside>
 
       <div class="services-grid">
-        <div class="service-card">
-          <div class="service-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+        <a class="service-card" href="/services/website">
+          <div class="card-face">
+            <div class="service-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+            </div>
+            <h2>Web Design &amp; Development</h2>
           </div>
-          <h2>Web Design &amp; Development</h2>
-          <p>Fully hand-coded, custom sites — no templates, no page builders. Built specifically for you, from scratch.</p>
-          <p class="price-hint">Starting at $500 (scene &amp; nonprofit)</p>
-          <a class="read-more" href="/services/website">Read More →</a>
-        </div>
+          <div class="card-details">
+            <p>Fully hand-coded, custom sites — no templates, no page builders. Built specifically for you, from scratch.</p>
+            <p class="price-hint">Starting at $500 (scene &amp; nonprofit)</p>
+            <span class="read-more">Read More →</span>
+          </div>
+        </a>
 
-        <div class="service-card">
-          <div class="service-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+        <a class="service-card" href="/services/automation">
+          <div class="card-face">
+            <div class="service-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+            </div>
+            <h2>Digital Systems &amp; Automation</h2>
           </div>
-          <h2>Digital Systems &amp; Automation</h2>
-          <p>Content dashboards, integrations, and automation — including Backline, my own client management tool.</p>
-          <p class="price-hint">Starting at $200 (scene &amp; nonprofit)</p>
-          <a class="read-more" href="/services/automation">Read More →</a>
-        </div>
+          <div class="card-details">
+            <p>Content dashboards, integrations, and automation — including Backline, my own client management tool.</p>
+            <p class="price-hint">Starting at $200 (scene &amp; nonprofit)</p>
+            <span class="read-more">Read More →</span>
+          </div>
+        </a>
 
-        <div class="service-card">
-          <div class="service-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+        <a class="service-card" href="/services/design">
+          <div class="card-face">
+            <div class="service-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+            </div>
+            <h2>Design Only</h2>
           </div>
-          <h2>Design Only</h2>
-          <p>Visual concepts and mockups, no development attached — for clients with their own developer, or who want direction locked in first.</p>
-          <p class="price-hint">Starting at $100 (scene &amp; nonprofit)</p>
-          <a class="read-more" href="/services/design">Read More →</a>
-        </div>
+          <div class="card-details">
+            <p>Visual concepts and mockups, no development attached — for clients with their own developer, or who want direction locked in first.</p>
+            <p class="price-hint">Starting at $100 (scene &amp; nonprofit)</p>
+            <span class="read-more">Read More →</span>
+          </div>
+        </a>
 
-        <div class="service-card">
-          <div class="service-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        <a class="service-card" href="/services/quick-tasks">
+          <div class="card-face">
+            <div class="service-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </div>
+            <h2>Quick Tasks</h2>
           </div>
-          <h2>Quick Tasks</h2>
-          <p>Small fixes, single features, one-off requests — for things too small to be their own project.</p>
-          <p class="price-hint">Starting at $30 (scene &amp; nonprofit)</p>
-          <a class="read-more" href="/services/quick-tasks">Read More →</a>
-        </div>
+          <div class="card-details">
+            <p>Small fixes, single features, one-off requests — for things too small to be their own project.</p>
+            <p class="price-hint">Starting at $30 (scene &amp; nonprofit)</p>
+            <span class="read-more">Read More →</span>
+          </div>
+        </a>
       </div>
     </section>
     </div>
@@ -320,6 +368,41 @@
   <script src="/components/helpers/footer-helper.js" defer></script>
   <script src="/components/simple-nav.js" defer></script>
   <script src="/components/helpers/nav-helper.js" defer></script>
+
+  <script>
+    function syncSidebarHeight() {
+      const grid = document.querySelector(".services-grid");
+      const sidebar = document.querySelector(".services-sidebar");
+      if (!grid || !sidebar) return;
+
+      // Only sync on desktop widths, where sidebar and grid sit side by side
+      if (window.innerWidth <= 860) {
+        sidebar.style.height = "";
+        sidebar.style.setProperty("--sidebar-scale", "1");
+        return;
+      }
+
+      const targetHeight = grid.getBoundingClientRect().height;
+      if (!targetHeight) return;
+
+      sidebar.style.height = `${targetHeight}px`;
+
+      // Reset to full scale, then measure natural content height
+      sidebar.style.setProperty("--sidebar-scale", "1");
+      const naturalHeight = sidebar.scrollHeight;
+
+      if (naturalHeight > targetHeight) {
+        const scale = Math.max(targetHeight / naturalHeight, 0.55);
+        sidebar.style.setProperty("--sidebar-scale", scale.toFixed(3));
+      }
+    }
+
+    window.addEventListener("load", syncSidebarHeight);
+    window.addEventListener("resize", () => {
+      clearTimeout(window._sidebarSyncTimer);
+      window._sidebarSyncTimer = setTimeout(syncSidebarHeight, 100);
+    });
+  </script>
 
 </body>
 </html>

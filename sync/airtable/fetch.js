@@ -30,6 +30,8 @@ export async function buildManifest() {
     const name = row.fields?.Name;
     if (!name) continue;
 
+    if (!row.fields?.Published) continue;
+
     items.push({
       name,
       type: row.fields?.Type || "",
@@ -41,6 +43,7 @@ export async function buildManifest() {
       previewMedia: row.fields?.["Preview Media"] || "",
       color: row.fields?.Color || "",
       tintColor: row.fields?.["Tint Color"] || "",
+      websiteUrl: row.fields?.["Website URL"] || "",
     });
   }
 

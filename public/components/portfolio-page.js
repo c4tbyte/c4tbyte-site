@@ -209,6 +209,11 @@ PP_TEMPLATE.innerHTML = `
     color: var(--pp-muted);
   }
 
+  .gallery-image img.scroll-pan {
+    object-fit: cover;
+    object-position: 50% 0%;
+  }
+
   .gallery-arrow {
     position: absolute;
     top: 50%;
@@ -315,6 +320,36 @@ PP_TEMPLATE.innerHTML = `
     padding: 4px 10px;
     border-radius: 999px;
     white-space: nowrap;
+  }
+
+  .meta-link-block {
+    margin-top: 48px;
+  }
+
+  .meta-link-block[hidden] {
+    display: none;
+  }
+
+  .website-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: var(--pp-fg);
+    color: #0a0a0a;
+    font-family: var(--pp-font-heading);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+
+  .website-button:hover {
+    transform: translateY(-2px);
+    background: var(--pp-accent, #ffffff);
   }
 
   /* ---- Markdown-rendered content block ---- */
@@ -440,6 +475,10 @@ PP_TEMPLATE.innerHTML = `
           <h4>Implementations</h4>
           <div class="meta-implementations pill-list"></div>
         </div>
+
+        <div class="meta-link-block">
+          <a class="website-button" href="#" target="_blank" rel="noopener">Go to Website →</a>
+        </div>
       </div>
     </div>
 
@@ -547,6 +586,15 @@ class PortfolioPage extends HTMLElement {
     root.querySelector(".meta-role").textContent = item.role || "";
     root.querySelector(".meta-stack").innerHTML = this._buildPills(item.stack);
     root.querySelector(".meta-implementations").innerHTML = this._buildPills(item.implementations);
+
+    const linkBlock = root.querySelector(".meta-link-block");
+    const websiteButton = root.querySelector(".website-button");
+    if (item.websiteUrl) {
+      websiteButton.href = item.websiteUrl;
+      linkBlock.hidden = false;
+    } else {
+      linkBlock.hidden = true;
+    }
 
     this._renderMarkdown(item);
 
@@ -680,6 +728,7 @@ class PortfolioPage extends HTMLElement {
     galleryImage.innerHTML = isVideo
       ? `<video src="${safeSrc}" autoplay muted loop playsinline></video>`
       : `<img src="${safeSrc}" alt="" />`;
+    this._applyScrollMode(galleryImage);
 
     const showArrows = gallery.length > 1;
     prevBtn.hidden = !showArrows;
@@ -687,6 +736,61 @@ class PortfolioPage extends HTMLElement {
 
     prevBtn.onclick = () => this._stepGallery(-1);
     nextBtn.onclick = () => this._stepGallery(1);
+  }
+
+  _applyScrollMode(container) {
+    const img = container.querySelector("img");
+    if (!img) return;
+
+    const apply = () => {
+      const ratio = img.naturalHeight / img.naturalWidth;
+      if (!ratio || ratio < 1.5) return;
+
+      img.classList.add("scroll-pan");
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      const boxRatio = container.clientHeight / container.clientWidth || 0.625;
+      const viewports = ratio / boxRatio;
+      const swipes = Math.min(Math.max(Math.ceil((viewports - 1) / 0.85), 2), 12);
+
+      const hold = 1200;
+      const swipe = 800;
+      const back = 900;
+      const flick = "cubic-bezier(0.16, 1, 0.3, 1)";
+      const glide = "cubic-bezier(0.65, 0, 0.35, 1)";
+
+      const frames = [];
+      let t = 0;
+      for (let i = 0; i <= swipes; i++) {
+        const pos = (i / swipes) * 100;
+        frames.push({ t, pos, easing: "linear" });
+        t += hold;
+        if (i < swipes) {
+          frames.push({ t, pos, easing: flick });
+          t += swipe;
+        }
+      }
+      frames.push({ t, pos: 100, easing: glide });
+      t += back;
+      frames.push({ t, pos: 0, easing: "linear" });
+
+      const total = t;
+      const anim = img.animate(
+        frames.map((f) => ({
+          objectPosition: `50% ${f.pos}%`,
+          easing: f.easing,
+          offset: f.t / total,
+        })),
+        { duration: total, iterations: Infinity }
+      );
+
+      img.addEventListener("mouseenter", () => anim.pause());
+      img.addEventListener("mouseleave", () => anim.play());
+    };
+
+    if (img.complete && img.naturalWidth) apply();
+    else img.addEventListener("load", apply, { once: true });
   }
 
   _stepGallery(delta) {

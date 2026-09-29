@@ -281,55 +281,11 @@
     text-decoration: underline;
   }
 
-  /* ---- Integrations marquee section ---- */
+  /* ---- Integrations section (integrations-strip component) ---- */
   .integrations-section {
     position: relative;
     z-index: 1;
     border-top: 1px solid var(--border-color, #737373);
-    padding: 32px 0;
-    text-align: center;
-  }
-
-  .integrations-heading {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 18px;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    margin: 0 0 14px;
-  }
-
-  .logo-marquee {
-    overflow: hidden;
-    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-  }
-
-  .logo-track {
-    display: flex;
-    align-items: center;
-    width: max-content;
-    gap: 51px;
-    animation: marquee-scroll 32s linear infinite;
-  }
-
-  .logo-track img {
-    height: 26px;
-    width: auto;
-    max-width: 100px;
-    object-fit: contain;
-    filter: brightness(0) invert(1);
-    opacity: 0.85;
-    flex-shrink: 0;
-  }
-
-  .logo-track img.invert-only {
-    filter: invert(1);
-  }
-
-  @keyframes marquee-scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
   }
 
   @media (max-width: 860px) {
@@ -450,42 +406,10 @@
     </section>
 
     <section class="integrations-section" id="integrations">
-      <h2 class="integrations-heading">Integrations</h2>
-      <div class="logo-marquee">
-        <div class="logo-track">
-          <img src="/images/logos/big-cartel.png" alt="Big Cartel" />
-          <img src="/images/logos/shopify.png" alt="Shopify" />
-          <img src="/images/logos/stripe.png" alt="Stripe" class="invert-only" />
-          <img src="/images/logos/ticketmaster.png" alt="Ticketmaster" />
-          <img src="/images/logos/songkick.png" alt="Songkick" />
-          <img src="/images/logos/bandsintown.png" alt="Bandsintown" />
-          <img src="/images/logos/eventbrite.png" alt="Eventbrite" class="invert-only" />
-          <img src="/images/logos/spotify.png" alt="Spotify" />
-          <img src="/images/logos/soundcloud.png" alt="SoundCloud" />
-          <img src="/images/logos/apple-music.png" alt="Apple Music" />
-          <img src="/images/logos/bandcamp.png" alt="Bandcamp" />
-          <img src="/images/logos/youtube.png" alt="YouTube" />
-          <img src="/images/logos/discord.png" alt="Discord" />
-          <img src="/images/logos/patreon.png" alt="Patreon" />
-          <img src="/images/logos/mailchimp.png" alt="Mailchimp" />
-          <!-- duplicated for seamless loop -->
-          <img src="/images/logos/big-cartel.png" alt="" aria-hidden="true" />
-          <img src="/images/logos/shopify.png" alt="" aria-hidden="true" />
-          <img src="/images/logos/stripe.png" alt="" aria-hidden="true" class="invert-only" />
-          <img src="/images/logos/ticketmaster.png" alt="" aria-hidden="true" />
-          <img src="/images/logos/songkick.png" alt="" aria-hidden="true" />
-          <img src="/images/logos/bandsintown.png" alt="" aria-hidden="true" />
-          <img src="/images/logos/eventbrite.png" alt="" aria-hidden="true" class="invert-only" />
-          <img src="/images/logos/spotify.png" alt="" aria-hidden="true" />
-          <img src="/images/logos/soundcloud.png" alt="" aria-hidden="true" />
-          <img src="/images/logos/apple-music.png" alt="" aria-hidden="true" />
-          <img src="/images/logos/bandcamp.png" alt="" aria-hidden="true" />
-          <img src="/images/logos/youtube.png" alt="" aria-hidden="true" />
-          <img src="/images/logos/discord.png" alt="" aria-hidden="true" />
-          <img src="/images/logos/patreon.png" alt="" aria-hidden="true" />
-          <img src="/images/logos/mailchimp.png" alt="" aria-hidden="true" />
-        </div>
-      </div>
+      <integrations-strip
+        title="Integrations"
+        subtext="Keep your existing stack — I just make it work better."
+      ></integrations-strip>
     </section>
     </div>
   </main>
@@ -495,6 +419,7 @@
   <script src="/components/helpers/text-helper.js" defer></script>
   <script src="/components/simple-footer.js" defer></script>
   <script src="/components/helpers/footer-helper.js" defer></script>
+  <script src="/components/integrations-strip.js" defer></script>
   <script src="/components/simple-nav.js" defer></script>
   <script src="/components/helpers/nav-helper.js" defer></script>
 

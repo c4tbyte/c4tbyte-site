@@ -117,6 +117,247 @@
       flex-shrink: 0;
     }
   }
+
+  /* ---- Services & Integrations section ---- */
+  .services-integrations {
+    position: relative;
+    border-bottom: 1px solid var(--border-color, #737373);
+    padding: 40px 34px;
+    text-align: center;
+  }
+
+  .si-heading {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+  }
+
+  .si-subtext {
+    font-family: var(--font-nav);
+    font-size: 15px;
+    color: #cfcfcf;
+    max-width: 560px;
+    margin: 0 auto 32px;
+  }
+
+  .si-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto 40px;
+  }
+
+  .service-card {
+    position: relative;
+    height: 260px;
+    border: 1px solid var(--border-color, #737373);
+    background: #131313;
+    overflow: hidden;
+    cursor: pointer;
+    text-align: left;
+    transition: transform 0.25s ease, background 0.3s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    background: #e0e0e0;
+    border-color: #e0e0e0;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .card-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 18px;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 0.25s ease;
+  }
+
+  .service-card:hover .card-face {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .card-face .service-card-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    background: #f2f2f2;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    color: #0a0a0a;
+    animation: si-icon-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes si-icon-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.85); }
+    50% { box-shadow: 0 0 0 7px rgba(255, 255, 255, 0); }
+  }
+
+  .card-face .service-card-icon svg {
+    width: 22px;
+    height: 22px;
+    stroke-width: 2.25;
+  }
+
+  .card-face h3 {
+    font-family: var(--font-heading);
+    font-size: 15px;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    margin: 0;
+    min-height: calc(15px * 1.25 * 2);
+    display: flex;
+    align-items: center;
+  }
+
+  .card-tagline {
+    font-family: var(--font-nav);
+    font-size: 10px;
+    letter-spacing: 0.02em;
+    color: #6b6b6b;
+    margin-top: 6px;
+  }
+
+  .card-price-preview {
+    position: absolute;
+    bottom: 18px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    transition: opacity 0.25s ease;
+  }
+
+  .service-card:hover .card-price-preview {
+    opacity: 0;
+  }
+
+  .price-amount {
+    display: block;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #4caf50;
+  }
+
+  .price-tier-label {
+    display: block;
+    font-family: var(--font-nav);
+    font-size: 9px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: #6b6b6b;
+    margin-top: 2px;
+  }
+
+  .card-details {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 22px;
+    color: #0a0a0a;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .service-card:hover .card-details {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .card-details p {
+    font-family: var(--font-nav);
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 0 0 12px;
+  }
+
+  .card-details .price-hint {
+    font-size: 10px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: #2e7d32;
+    margin-bottom: 12px;
+  }
+
+  .read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-nav);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .read-more:hover {
+    text-decoration: underline;
+  }
+
+  .logo-marquee {
+    overflow: hidden;
+    max-width: 1100px;
+    margin: 0 auto;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+
+  .logo-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    gap: 51px;
+    animation: si-marquee-scroll 32s linear infinite;
+  }
+
+  .logo-track img {
+    height: 26px;
+    width: auto;
+    max-width: 100px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+    flex-shrink: 0;
+  }
+
+  .logo-track img.invert-only {
+    filter: invert(1);
+  }
+
+  @keyframes si-marquee-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @media (max-width: 860px) {
+    .si-cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
   </style>
 
 </head>
@@ -149,11 +390,111 @@
         ></work-showcase>
       </section>
 
-      <section class="integrations">
-        <integrations-strip
-          title="Integrations"
-          subtext="Keep your existing stack – I just make it work better."
-        ></integrations-strip>
+      <section class="services-integrations">
+        <h2 class="si-heading">Services &amp; Integrations</h2>
+        <p class="si-subtext">Keep your existing stack — I just make it work better. Or let's build something new.</p>
+
+        <div class="si-cards">
+          <a class="service-card" href="/services/website">
+            <div class="card-face">
+              <div class="service-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+              </div>
+              <h3>Web Design &amp; Development</h3>
+              <p class="card-tagline">Fully custom sites, no page builders.</p>
+            </div>
+            <p class="card-price-preview"><span class="price-amount">Starting at $400</span><span class="price-tier-label">(Scene &amp; Nonprofit)</span></p>
+            <div class="card-details">
+              <p>From moodboard to mockup to launch, every step is built around your vision. Includes responsive design, basic SEO, and deployment — ready to go live.</p>
+              <p class="price-hint">Starting at $400 (scene &amp; nonprofit)</p>
+              <span class="read-more">Read More →</span>
+            </div>
+          </a>
+
+          <a class="service-card" href="/services/automation">
+            <div class="card-face">
+              <div class="service-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+              </div>
+              <h3>Digital Systems &amp; Automation</h3>
+              <p class="card-tagline">Making your digital presence as easy as possible.</p>
+            </div>
+            <p class="card-price-preview"><span class="price-amount">Starting at $100</span><span class="price-tier-label">(Scene &amp; Nonprofit)</span></p>
+            <div class="card-details">
+              <p>Powered by Backline, my own client dashboard — swap photos, update text, and adjust embeds without touching code. Includes automated syncing, integrations with the platforms you already use, and built-in safeguards so a temporary outage never takes your site down.</p>
+              <p class="price-hint">Starting at $100 (scene &amp; nonprofit)</p>
+              <span class="read-more">Read More →</span>
+            </div>
+          </a>
+
+          <a class="service-card" href="/services/design">
+            <div class="card-face">
+              <div class="service-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+              </div>
+              <h3>Design Only</h3>
+              <p class="card-tagline">All the vibes, none of the code.</p>
+            </div>
+            <p class="card-price-preview"><span class="price-amount">Starting at $100</span><span class="price-tier-label">(Scene &amp; Nonprofit)</span></p>
+            <div class="card-details">
+              <p>A full mockup, feedback rounds, and a defined look — colors, type, layout, etc. Bring your own developer, or come back to me once you're ready.</p>
+              <p class="price-hint">Starting at $100 (scene &amp; nonprofit)</p>
+              <span class="read-more">Read More →</span>
+            </div>
+          </a>
+
+          <a class="service-card" href="/services/quick-tasks">
+            <div class="card-face">
+              <div class="service-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              </div>
+              <h3>Quick Tasks</h3>
+              <p class="card-tagline">For the small stuff.</p>
+            </div>
+            <p class="card-price-preview"><span class="price-amount">Starting at $30</span><span class="price-tier-label">(Scene &amp; Nonprofit)</span></p>
+            <div class="card-details">
+              <p>Something's broken, or you need one small thing added — not a whole redesign. I'll finish it up fast with no complications.</p>
+              <p class="price-hint">Starting at $30 (scene &amp; nonprofit)</p>
+              <span class="read-more">Read More →</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="logo-marquee">
+          <div class="logo-track">
+            <img src="/images/logos/big-cartel.png" alt="Big Cartel" />
+            <img src="/images/logos/shopify.png" alt="Shopify" />
+            <img src="/images/logos/stripe.png" alt="Stripe" class="invert-only" />
+            <img src="/images/logos/ticketmaster.png" alt="Ticketmaster" />
+            <img src="/images/logos/songkick.png" alt="Songkick" />
+            <img src="/images/logos/bandsintown.png" alt="Bandsintown" />
+            <img src="/images/logos/eventbrite.png" alt="Eventbrite" class="invert-only" />
+            <img src="/images/logos/spotify.png" alt="Spotify" />
+            <img src="/images/logos/soundcloud.png" alt="SoundCloud" />
+            <img src="/images/logos/apple-music.png" alt="Apple Music" />
+            <img src="/images/logos/bandcamp.png" alt="Bandcamp" />
+            <img src="/images/logos/youtube.png" alt="YouTube" />
+            <img src="/images/logos/discord.png" alt="Discord" />
+            <img src="/images/logos/patreon.png" alt="Patreon" />
+            <img src="/images/logos/mailchimp.png" alt="Mailchimp" />
+            <!-- duplicated for seamless loop -->
+            <img src="/images/logos/big-cartel.png" alt="" aria-hidden="true" />
+            <img src="/images/logos/shopify.png" alt="" aria-hidden="true" />
+            <img src="/images/logos/stripe.png" alt="" aria-hidden="true" class="invert-only" />
+            <img src="/images/logos/ticketmaster.png" alt="" aria-hidden="true" />
+            <img src="/images/logos/songkick.png" alt="" aria-hidden="true" />
+            <img src="/images/logos/bandsintown.png" alt="" aria-hidden="true" />
+            <img src="/images/logos/eventbrite.png" alt="" aria-hidden="true" class="invert-only" />
+            <img src="/images/logos/spotify.png" alt="" aria-hidden="true" />
+            <img src="/images/logos/soundcloud.png" alt="" aria-hidden="true" />
+            <img src="/images/logos/apple-music.png" alt="" aria-hidden="true" />
+            <img src="/images/logos/bandcamp.png" alt="" aria-hidden="true" />
+            <img src="/images/logos/youtube.png" alt="" aria-hidden="true" />
+            <img src="/images/logos/discord.png" alt="" aria-hidden="true" />
+            <img src="/images/logos/patreon.png" alt="" aria-hidden="true" />
+            <img src="/images/logos/mailchimp.png" alt="" aria-hidden="true" />
+          </div>
+        </div>
       </section>
 
       <section class="about">
@@ -172,9 +513,8 @@
   <script src="/components/simple-footer.js" defer></script>
   <script src="/components/helpers/footer-helper.js" defer></script>
   <script src="/components/work-showcase.js" defer></script>
-  <script src="/components/integrations-strip.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
   <script src="/components/about-fetch.js" defer></script>
-  <script src="/components/stack-strip.js" defer></script>
   <script src="/components/simple-nav.js" defer></script>
   <script src="/components/helpers/nav-helper.js" defer></script>
 

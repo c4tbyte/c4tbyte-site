@@ -71,6 +71,8 @@
   .services-sidebar {
     flex: 0 0 220px;
     min-width: 0;
+    background: #ffffff;
+    padding: 24px;
   }
 
   .sidebar-group {
@@ -93,11 +95,11 @@
   }
 
   .sidebar-links li {
-    border-bottom: 1px solid var(--border-color, #737373);
+    border-bottom: 1px solid #cccccc;
   }
 
   .sidebar-links li:first-child {
-    border-top: 1px solid var(--border-color, #737373);
+    border-top: 1px solid #cccccc;
   }
 
   .sidebar-links a {
@@ -107,14 +109,14 @@
     font-size: 22px;
     letter-spacing: 0.03em;
     text-transform: uppercase;
-    color: #9a9a9a;
+    color: #333333;
     text-decoration: none;
     text-shadow: 0.3px 0 0 currentColor, -0.3px 0 0 currentColor;
     transition: color 0.15s ease, padding-left 0.15s ease;
   }
 
   .sidebar-links a:hover {
-    color: #ffffff;
+    color: #0a0a0a;
     padding-left: 4px;
   }
 
@@ -192,7 +194,7 @@
     font-size: 17px;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    color: #8fae8f;
+    color: #4caf50;
   }
 
   .price-tier-label {
@@ -230,8 +232,8 @@
   }
 
   @keyframes icon-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(242, 242, 242, 0.5); }
-    50% { box-shadow: 0 0 0 6px rgba(242, 242, 242, 0); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.85); }
+    50% { box-shadow: 0 0 0 8px rgba(255, 255, 255, 0); }
   }
 
   .card-face .service-card-icon svg {
@@ -281,7 +283,7 @@
     font-size: 13px;
     letter-spacing: 0.03em;
     text-transform: uppercase;
-    color: #4a6b4a;
+    color: #2e7d32;
     margin-bottom: 16px;
   }
 
@@ -452,7 +454,6 @@
 
       const sidebarHeight = sidebar.scrollHeight;
 
-      // Loose sanity cap so height can't run away on an unusually tall sidebar
       const maxReasonableHeight = window.innerHeight * 0.7;
 
       const cardSize = Math.min(sidebarHeight, maxReasonableHeight);

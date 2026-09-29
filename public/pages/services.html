@@ -37,29 +37,6 @@
     z-index: 1;
   }
 
-  .services-header {
-    text-align: center;
-    padding: 32px 34px 24px;
-  }
-
-  .services-heading {
-    font-family: var(--font-heading);
-    font-weight: 900;
-    font-size: clamp(28px, 4vw, 44px);
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    margin: 0 0 10px;
-  }
-
-  .services-subtext {
-    font-family: var(--font-nav);
-    font-size: 15px;
-    line-height: 1.5;
-    color: #cfcfcf;
-    max-width: 560px;
-    margin: 0 auto;
-  }
-
   .services-layout {
     display: flex;
     gap: 40px;
@@ -70,6 +47,15 @@
   .services-sidebar {
     flex: 0 0 220px;
     min-width: 0;
+  }
+
+  .services-heading {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: 32px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin: 0 0 20px;
   }
 
   .sidebar-group {
@@ -372,18 +358,11 @@
   <!-- Page content -->
   <main>
     <div class="services-wrap">
-    <section class="services-header">
-      <h1 class="services-heading">Services</h1>
-      <p class="services-subtext">
-        Custom web development, digital systems, and design work — priced
-        fairly for the DIY scene, and built the same way regardless of budget.
-      </p>
-    </section>
-
     <section class="services-layout">
       <aside class="services-sidebar">
+        <h1 class="services-heading">Services</h1>
+
         <div class="sidebar-group">
-          <p class="sidebar-label">Services</p>
           <ul class="sidebar-links">
             <li><a href="/services/website">Web Design &amp; Development</a></li>
             <li><a href="/services/automation">Digital Systems &amp; Automation</a></li>
